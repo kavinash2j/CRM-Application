@@ -2,12 +2,11 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl flex overflow-hidden">
-                {/* Left Section */}
-                <div className="flex-1 p-10 flex flex-col justify-center">
-                    <img src="/your-logo.png" alt="Logo" className="h-10 mb-8" />
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+            <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
 
+                {/* Left Section (Form) */}
+                <div className="p-10 flex flex-col justify-center">
                     <h2 className="text-3xl font-bold mb-2">Login</h2>
                     <p className="text-gray-500 mb-6">
                         Login to access your account
@@ -71,12 +70,12 @@ export default function Login() {
                     </div>
                 </div>
 
-                {/* Right Section (Image with reduced height) */}
-                <div className="flex-1 bg-gray-100 flex items-center justify-center p-2">
+                {/* Right Section (Image) */}
+                <div className="bg-gray-100 flex items-center justify-center p-6">
                     <img
-                        src="../public/loginimage.jpg"
+                        src="/loginimage.jpg"
                         alt="Login"
-                        className=" object-contain"
+                        className="max-h-[400px] object-contain"
                     />
                 </div>
             </div>

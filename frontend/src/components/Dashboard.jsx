@@ -10,66 +10,25 @@ import {
     ResponsiveContainer,
 } from "recharts";
 
-export default function Dashboard() {
-    // Customers array
-    const customers = [
-        { id: 1, name: "Deanna Annis", email: "deannaannis@gmail.com" },
-        { id: 2, name: "Andrea Willis", email: "andreawillis@gmail.com" },
-        { id: 3, name: "Brent Rodrigues", email: "brodrigues@gmail.com" },
-    ];
+export default function Dashboard({ customers, deals }) {
+    // Chart data
+    // Calculate last 6 months of deals
+    const chartData = Array.from({ length: 6 }, (_, i) => {
+        const date = new Date();
+        date.setMonth(date.getMonth() - (5 - i)); // go back 5,4,...,0 months
 
-    // Deals array
-    const deals = [
-        {
-            id: 101,
-            customerId: 1,
-            address: "319 Haul Road",
-            status: "In Progress",
-            price: 5750,
-            date: "Nov 18 2021, 17:00",
-            area: "100 m²",
-            people: 10,
-        },
-        {
-            id: 102,
-            customerId: 2,
-            address: "47 Spruce Drive",
-            status: "Closed",
-            price: 5750,
-            date: "Nov 15 2021, 08:00",
-            area: "120 m²",
-            people: 8,
-        },
-        {
-            id: 103,
-            customerId: 3,
-            address: "165 Belmont Drive",
-            status: "In Progress",
-            price: 5750,
-            date: "Nov 16 2021, 09:30",
-            area: "95 m²",
-            people: 5,
-        },
-        {
-            id: 104,
-            customerId: 1,
-            address: "1538 Hammer Road",
-            status: "Closed",
-            price: 5750,
-            date: "Nov 20 2021, 14:00",
-            area: "110 m²",
-            people: 7,
-        },
-    ];
+        const month = date.toLocaleString("default", { month: "short" });
+        const year = date.getFullYear();
 
-    // Calculate overview chart data (deals per month)
-    const chartData = [
-        { name: "Jan", deals: 2 },
-        { name: "Feb", deals: 3 },
-        { name: "Mar", deals: 5 },
-        { name: "Apr", deals: 2 },
-        { name: "May", deals: 4 },
-    ];
+        // Count deals in this month & year
+        const dealsCount = deals.filter((d) => {
+            const dDate = new Date(d.createdAt);
+            return dDate.getMonth() === date.getMonth() && dDate.getFullYear() === year;
+        }).length;
+
+        return { name: month, deals: dealsCount };
+    });
+
 
     // Pick the next appointment (just take first In Progress deal)
     const nextAppointment = deals.find((d) => d.status === "In Progress");
@@ -86,13 +45,9 @@ export default function Dashboard() {
                         <p className="text-sm">
                             {customers.find((c) => c.id === nextAppointment.customerId)?.name}
                         </p>
-                        <p className="mt-4 text-sm">{nextAppointment.date}</p>
-                        <div className="flex justify-between mt-4 text-sm">
-                            <span>{nextAppointment.area}</span>
-                            <span>{nextAppointment.people} People</span>
-                        </div>
+                        <p className="mt-4 text-sm">{nextAppointment.createdAt}</p>
                         <div className="flex justify-between items-center mt-6">
-                            <span className="font-bold text-xl">${nextAppointment.price}</span>
+                            <span className="font-bold text-xl">${nextAppointment.value}</span>
                             <button className="bg-white text-indigo-600 px-4 py-2 rounded-lg">
                                 See Detail
                             </button>
@@ -100,37 +55,53 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Customers + Deals Combined */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm grid grid-cols-2 divide-x">
+                {/* Customers + Deals Count */}
+                <div className="grid grid-cols-2 gap-6">
+                    {/* Customers */}
                     <Link
                         to="/customers"
-                        className="flex flex-col items-center justify-center hover:bg-gray-50 transition rounded-xl p-2"
+                        className="group bg-gradient-to-r from-indigo-50 to-indigo-100 p-6 rounded-2xl shadow hover:shadow-md transition-all flex flex-col items-center justify-center"
                     >
-                        <p className="text-gray-500 text-sm">Customers</p>
-                        <p className="text-2xl font-bold">{customers.length}</p>
+                        <div className="w-12 h-12 flex items-center justify-center bg-indigo-200 text-indigo-700 rounded-full mb-4 group-hover:scale-110 transition">
+                            👥
+                        </div>
+                        <p className="text-gray-600 text-sm">Customers</p>
+                        <p className="text-3xl font-bold text-indigo-700">{customers.length}</p>
                     </Link>
+
+                    {/* Deals */}
                     <Link
                         to="/deals"
-                        className="flex flex-col items-center justify-center hover:bg-gray-50 transition rounded-xl p-2"
+                        className="group bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-2xl shadow hover:shadow-md transition-all flex flex-col items-center justify-center"
                     >
-                        <p className="text-gray-500 text-sm">Deals</p>
-                        <p className="text-2xl font-bold">{deals.length}</p>
+                        <div className="w-12 h-12 flex items-center justify-center bg-blue-200 text-blue-700 rounded-full mb-4 group-hover:scale-110 transition">
+                            💼
+                        </div>
+                        <p className="text-gray-600 text-sm">Deals</p>
+                        <p className="text-3xl font-bold text-blue-700">{deals.length}</p>
                     </Link>
                 </div>
 
+
                 {/* Recent Deals */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
-                    <h2 className="font-semibold">Recent Deals</h2>
+                    <div className="flex justify-between items-center">
+                        <h2 className="font-semibold">Recent Deals</h2>
+                        <Link to="/deals" className="text-indigo-600 text-sm hover:underline">
+                            See More
+                        </Link>
+                    </div>
                     <ul className="mt-4 space-y-3">
                         {deals.slice(0, 4).map((deal) => (
                             <li key={deal.id} className="flex justify-between text-sm">
-                                <span>{deal.address}</span> <span>${deal.price}</span>
+                                <span>{deal.address}</span>
+                                <span>${deal.value}</span>
                             </li>
                         ))}
                     </ul>
                 </div>
 
-                {/* Graph / Analytics */}
+                {/* Deals Overview Chart */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
                     <h2 className="font-semibold mb-4">Deals Overview</h2>
                     <ResponsiveContainer width="100%" height={200}>
@@ -149,9 +120,14 @@ export default function Dashboard() {
             <div className="col-span-4 flex flex-col gap-6">
                 {/* Customers List */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
-                    <h2 className="font-semibold">Customers</h2>
+                    <div className="flex justify-between items-center">
+                        <h2 className="font-semibold">Customers</h2>
+                        <Link to="/customers" className="text-indigo-600 text-sm hover:underline">
+                            See More
+                        </Link>
+                    </div>
                     <ul className="mt-4 space-y-3">
-                        {customers.map((c) => (
+                        {customers.slice(0, 4).map((c) => (
                             <li key={c.id}>
                                 <p className="font-medium">{c.name}</p>
                                 <p className="text-xs text-gray-500">{c.email}</p>

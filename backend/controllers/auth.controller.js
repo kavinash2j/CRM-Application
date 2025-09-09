@@ -27,6 +27,7 @@ module.exports.loginController = async (req, res) => {
 }
 
 module.exports.registerController = async (req, res) => {
+    console.log("/resiter route hit")
     try {
         const error = validationResult(req);
         if (!error.isEmpty()) {
@@ -47,7 +48,7 @@ module.exports.registerController = async (req, res) => {
         });
 
         await newUser.save();
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "User registered successfully", });
 
     } catch (err) {
         res.status(500).json({ message: "error in the register route", error: err });

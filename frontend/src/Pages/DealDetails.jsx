@@ -1,51 +1,20 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import EditDeal from "../components/EditDeal";
 
-const deals = [
-    {
-        id: 1,
-        customer: "Deanna Annis",
-        email: "brodrigues@gmail.com",
-        phone: "617-952-4069",
-        address: "2893 Austin Secret Lane, Parowan, UT 12413",
-        progress: "In Progress",
-        appointment: "Nov 17, 2021 08:00",
-        area: "25 M²",
-        people: 10,
-        price: "$6000",
-        access: "Keys with doorman",
-        instructions:
-            "At risus viverra adipiscing in at tellus. Blandit massa enim nec dui nunc mattis. Lacus vel facilisis volutpat est velit.",
-        activity: [
-            {
-                date: "17 Nov 2021",
-                text: "Installation or inspection of your thermostat",
-            },
-            {
-                date: "16 Nov 2021",
-                text: "Installation of the new air conditioning system",
-            },
-            {
-                date: "16 Nov 2021",
-                text: "Evaluation and removal of the old system",
-            },
-        ],
-    }
-];
-
-
-
-export default function DealDetails() {
-    // const { id = 1 } = useParams();
-    const id = 1
+export default function DealDetails({ deals, customers }) {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
 
     const deal = deals.find((deal) => deal.id === parseInt(id));
 
-
+    if (!deal) {
+        return <div className="p-6">Deal not found</div>;
+    }
+    const customer = customers.find((c) => c.id === deal.customerId);
     return (
         <div className="flex h-screen bg-gray-100">
             {/* Sidebar */}
@@ -56,26 +25,10 @@ export default function DealDetails() {
                 <Topbar title="Deal Details" onAddNew={() => alert("New action")} />
 
                 <div className="flex flex-1 p-6 gap-6 overflow-y-auto">
-                    {/* Left Content */}
                     <div className="flex-1 bg-white rounded-2xl shadow p-6">
-                        {/* Customer Info */}
+                        {/* Header */}
                         <div className="flex justify-between items-center border-b pb-4 mb-4">
-                            <div className="flex gap-8">
-                                <div>
-                                    <p className="text-sm text-gray-500">Customer</p>
-                                    <p className="font-semibold">{deal.customer}</p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Email</p>
-                                    <p className="font-semibold">{deal.email}</p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Phone</p>
-                                    <p className="font-semibold">{deal.phone}</p>
-                                </div>
-                            </div>
-
-                            {/* Edit & Delete Deal Buttons */}
+                            <h2 className="text-xl font-bold">{deal.title}</h2>
                             <div className="flex gap-2">
                                 <button
                                     className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm"
@@ -89,58 +42,46 @@ export default function DealDetails() {
                             </div>
                         </div>
 
-                        {/* Address */}
-                        <h2 className="text-xl font-bold mb-6">{deal.address}</h2>
+                        {/* Customer Profile */}
+                        {deal.customerId && (
+                            <div
+                                className="flex items-center gap-3 p-4 border rounded-lg mb-6 cursor-pointer hover:bg-gray-50 transition"
+                                onClick={() => navigate(`/customer/${deal.customerId}`)}
+                            >
+                                <img
+                                    src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
 
-                        {/* Deal Details Grid */}
+                                    className="w-12 h-12 rounded-full border"
+                                />
+                                <div>
+                                    <p className="font-semibold text-gray-800">
+                                        {customer.name || "Unknown Customer"}
+                                    </p>
+                                    <p className="text-sm text-gray-500">View Profile</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Deal Details */}
                         <div className="grid grid-cols-2 gap-6 mb-6">
                             <div>
-                                <p className="text-sm text-gray-500">Progress</p>
-                                <p className="font-semibold">{deal.progress}</p>
+                                <p className="text-sm text-gray-500">Status</p>
+                                <p className="font-semibold">{deal.status}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-500">Appointment Date</p>
-                                <p className="font-semibold">{deal.appointment}</p>
+                                <p className="text-sm text-gray-500">Value</p>
+                                <p className="font-semibold">{deal.value}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-500">Room Area</p>
-                                <p className="font-semibold">{deal.area}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Number of people</p>
-                                <p className="font-semibold">{deal.people}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Price</p>
-                                <p className="font-semibold">{deal.price}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Room Access</p>
-                                <p className="font-semibold">{deal.access}</p>
+                                <p className="text-sm text-gray-500">Created At</p>
+                                <p className="font-semibold">{deal.createdAt}</p>
                             </div>
                         </div>
 
-                        {/* Special Instructions */}
+                        {/* Description */}
                         <div>
-                            <p className="text-sm text-gray-500 mb-1">Special Instructions</p>
-                            <p className="text-gray-700">{deal.instructions}</p>
-                        </div>
-                    </div>
-
-                    {/* Right Sidebar */}
-                    <div className="w-80 bg-white rounded-2xl shadow p-6 flex flex-col">
-                        {/* Activity Log */}
-                        <div className="flex-1">
-                            <h3 className="font-semibold mb-3">Activity Log</h3>
-                            <div className="space-y-4">
-                                {deal.activity.map((item, idx) => (
-                                    <div key={idx} className="border rounded-lg p-3">
-                                        <p className="text-sm text-gray-500">{item.date}</p>
-                                        <p className="text-gray-700 text-sm">{item.text}</p>
-                                    </div>
-                                ))}
-                            </div>
-                            <button className="text-indigo-600 text-sm mt-4">Load More</button>
+                            <p className="text-sm text-gray-500 mb-1">Description</p>
+                            <p className="text-gray-700">{deal.description}</p>
                         </div>
                     </div>
                 </div>

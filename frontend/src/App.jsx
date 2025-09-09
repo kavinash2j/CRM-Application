@@ -10,25 +10,6 @@ import CustomerDetails from "./Pages/CustomerDeatils";
 
 export default function App() {
   let ref = useRef(null);
-  // const customers = [
-  //   {
-  //     id: 1,
-  //     name: "Deanna Annis",
-  //     email: "deannannis@gmail.com",
-  //     phone: "999-999-9999",
-  //     address: "475 Spruce Drive, Pittsburgh, PA 23592",
-  //     avatar: "https://i.pravatar.cc/100?img=1",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "George Gamble",
-  //     email: "goergegamble@gmail.com",
-  //     phone: "999-999-9999",
-  //     address: "2213 Thorn Street, Glenrock, WY 12345",
-  //     avatar: "https://i.pravatar.cc/100?img=2",
-  //   },
-  // ];
-
 
   const customers = [
     {
@@ -37,7 +18,6 @@ export default function App() {
       email: "deannannis@gmail.com",
       phone: "999-999-9999",
       address: "475 Spruce Drive, Pittsburgh, PA 23592",
-      avatar: "https://i.pravatar.cc/40?img=1",
     },
     {
       id: 2,
@@ -45,7 +25,6 @@ export default function App() {
       email: "goergegamble@gmail.com",
       phone: "999-999-9999",
       address: "2213 Thorn Street, Glenrock, WY 12345",
-      avatar: "https://i.pravatar.cc/40?img=2",
     },
     {
       id: 3,
@@ -53,63 +32,170 @@ export default function App() {
       email: "andreawillis@gmail.com",
       phone: "999-999-9999",
       address: "1952 Chicago Avenue, Fresno, CA 93711",
-      avatar: "https://i.pravatar.cc/40?img=3",
+    },
+    {
+      id: 4,
+      name: "Michael Johnson",
+      email: "michael.johnson@gmail.com",
+      phone: "888-555-1212",
+      address: "742 Evergreen Terrace, Springfield, IL 62704",
+    },
+    {
+      id: 5,
+      name: "Sophia Brown",
+      email: "sophia.brown@gmail.com",
+      phone: "777-444-3333",
+      address: "1600 Pennsylvania Avenue, Washington, DC 20500",
+    },
+    {
+      id: 6,
+      name: "Daniel Lee",
+      email: "daniel.lee@gmail.com",
+      phone: "666-222-1111",
+      address: "99 Market Street, San Francisco, CA 94105",
+    },
+    {
+      id: 7,
+      name: "Olivia Martinez",
+      email: "olivia.martinez@gmail.com",
+      phone: "555-111-2222",
+      address: "120 Broadway, New York, NY 10005",
+    },
+    {
+      id: 8,
+      name: "James Anderson",
+      email: "james.anderson@gmail.com",
+      phone: "444-333-2222",
+      address: "500 Lakeshore Drive, Chicago, IL 60611",
+    },
+    {
+      id: 9,
+      name: "Emma Davis",
+      email: "emma.davis@gmail.com",
+      phone: "333-222-1111",
+      address: "15 Ocean View Road, Miami, FL 33101",
+    },
+    {
+      id: 10,
+      name: "William Thompson",
+      email: "william.thompson@gmail.com",
+      phone: "222-999-8888",
+      address: "78 Hilltop Avenue, Denver, CO 80202",
     },
   ];
+
+
   const deals = [
-    { id: 101, customerId: 1, address: "2893 Austin Secret Lane", status: "In Progress", price: "$6000" },
-    { id: 102, customerId: 1, address: "4409 Haul Road", status: "Closed", price: "$5000" },
-    { id: 103, customerId: 2, address: "579 Godfrey Street", status: "In Progress", price: "$4000" },
+    {
+      id: 1,
+      customerId: 1,
+      title: "Website Redesign Project",
+      address: "2893 Austin Secret Lane",
+      description: "Redesign corporate website to improve user experience.",
+      status: "Contacted",
+      value: "5000",
+      createdAt: "2025-09-01",
+    },
+    {
+      id: 2,
+      customerId: 1,
+      title: "Mobile App Development",
+      address: "2893 Austin Secret Lane",
+      description: "New iOS & Android app for online booking system.",
+      status: "New",
+      value: "12000",
+      createdAt: "2025-09-05",
+    },
+    {
+      id: 3,
+      customerId: 1,
+      title: "SEO Optimization",
+      address: "2893 Austin Secret Lane",
+      description: "Improve search engine ranking for client websites.",
+      status: "Converted",
+      value: "3000",
+      createdAt: "2025-09-07",
+    },
+    {
+      id: 4,
+      customerId: 1,
+      title: "Cloud Migration",
+      address: "1105 Silicon Valley Drive",
+      description: "Migrate legacy applications to AWS cloud.",
+      status: "In Progress",
+      value: "15000",
+      createdAt: "2025-09-08",
+    },
+    {
+      id: 5,
+      customerId: 2,
+      title: "E-commerce Platform",
+      address: "2213 Thorn Street",
+      description: "Build a scalable e-commerce platform with payment integration.",
+      status: "New",
+      value: "25000",
+      createdAt: "2025-08-25",
+    },
+    {
+      id: 6,
+      customerId: 2,
+      title: "Digital Marketing Campaign",
+      address: "2213 Thorn Street",
+      description: "Launch ads on Google & Facebook for product promotion.",
+      status: "Contacted",
+      value: "7000",
+      createdAt: "2025-08-30",
+    },
+    {
+      id: 7,
+      customerId: 2,
+      title: "Data Analytics Dashboard",
+      address: "2213 Thorn Street",
+      description: "Develop BI dashboard with charts & KPIs.",
+      status: "Converted",
+      value: "10000",
+      createdAt: "2025-09-03",
+    },
+    {
+      id: 8,
+      customerId: 3,
+      title: "HR Management System",
+      address: "475 Spruce Drive",
+      description: "Custom HRMS with leave & payroll features.",
+      status: "In Progress",
+      value: "18000",
+      createdAt: "2025-09-04",
+    },
+    {
+      id: 9,
+      customerId: 3,
+      title: "Cybersecurity Audit",
+      address: "475 Spruce Drive",
+      description: "Audit company network for vulnerabilities.",
+      status: "Closed",
+      value: "9000",
+      createdAt: "2025-09-06",
+    },
+    {
+      id: 10,
+      customerId: 3,
+      title: "AI Chatbot Integration",
+      address: "475 Spruce Drive",
+      description: "Integrate chatbot into customer support system.",
+      status: "New",
+      value: "12000",
+      createdAt: "2025-09-09",
+    },
   ];
-  // const deals = [
-  //   {
-  //     id: 1,
-  //     address: "475 Spruce Drive, Pittsburgh, PA 23592",
-  //     area: "100M²",
-  //     date: "Nov 14, 2021 07:00 AM",
-  //     price: "$6000",
-  //     status: "IN PROGRESS",
-  //   },
-  //   {
-  //     id: 2,
-  //     address: "1952 Chicago Avenue, Fresno, CA 93711",
-  //     area: "100M²",
-  //     date: "Nov 15, 2021 08:00 AM",
-  //     price: "$6000",
-  //     status: "CLOSED",
-  //   },
-  //   {
-  //     id: 3,
-  //     address: "4409 Haul Road, Saint Paul, MN 55102",
-  //     area: "100M²",
-  //     date: "Nov 16, 2021 09:00 AM",
-  //     price: "$6000",
-  //     status: "IN PROGRESS",
-  //   },
-  //   {
-  //     id: 4,
-  //     address: "579 Godfrey Street, Monitor, OR 97071",
-  //     area: "100M²",
-  //     date: "Nov 17, 2021 10:00 AM",
-  //     price: "$6000",
-  //     status: "CLOSED",
-  //   },
-  //   {
-  //     id: 5,
-  //     address: "2705 Cantebury Drive, New York, NY 10011",
-  //     area: "100M²",
-  //     date: "Nov 20, 2021 07:00 AM",
-  //     price: "$6000",
-  //     status: "IN PROGRESS",
-  //   },
-  // ];
+
+
   return (
     <Routes>
-      <Route path="/dashboard" element={<Home />} />
+      <Route path="/dashboard" element={<Home customers={customers} deals={deals} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/deals" element={<Deal deals={deals} />} />
-      <Route path="/deals/:id" element={<DealDetails />} />
+      <Route path="/deals/:id" element={<DealDetails deals={deals} customers={customers} />} />
       <Route path="/customers" element={<Customers customers={customers} />} />
       <Route path="/customer/:id" element={<CustomerDetails customers={customers} deals={deals} />} />
     </Routes>

@@ -1,76 +1,158 @@
 // Signup.jsx
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+    const [form, setForm] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+
+        if (form.password !== form.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // 1️⃣ Register the user
+            await axios.post("http://localhost:3000/api/register", {
+                name: `${form.firstName} ${form.lastName}`,
+                email: form.email,
+                password: form.password,
+            }).then(() => {
+                setSuccess("Account created successfully!");
+            }).catch((err) => {
+                console.log(err);
+            });
+
+
+
+            // 2️⃣ Automatically log in the user
+            const loginRes = await axios.post("http://localhost:3000/api/login", {
+                email: form.email,
+                password: form.password,
+            });
+
+            // 3️⃣ Store token from login
+            const token = loginRes.data.token;
+            localStorage.setItem("token", token);
+
+            // 4️⃣ Redirect to dashboard
+            navigate("/login");
+
+            // Reset form
+            setForm({
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+            });
+
+        } catch (err) {
+            setError(err.response?.data?.message || "Something went wrong");
+        }
+
+        setLoading(false);
+    };
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl flex overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+            <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
                 {/* Left Section (Image) */}
-                <div className="flex-1 bg-gray-100 flex items-center justify-center p-6">
-                    <img src="/signup-image.png" alt="Signup" className="max-h-96" />
+                <div className="bg-gray-100 flex items-center justify-center p-6">
+                    <img src="/loginimage.jpg" alt="Signup" className="max-h-[400px] object-contain" />
                 </div>
 
                 {/* Right Section */}
-                <div className="flex-1 p-10 flex flex-col justify-center">
-                    <img src="/your-logo.png" alt="Logo" className="h-10 mb-8" />
-
+                <div className="p-10 flex flex-col justify-center">
                     <h2 className="text-3xl font-bold mb-2">Sign up</h2>
                     <p className="text-gray-500 mb-6">
                         Let’s get you all set up so you can access your personal account.
                     </p>
 
-                    <form className="space-y-5">
-                        <div className="grid grid-cols-2 gap-4">
+                    {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+                    {success && <p className="text-green-500 text-sm mb-3">{success}</p>}
+
+                    <form className="space-y-5" onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <input
                                 type="text"
+                                name="firstName"
+                                value={form.firstName}
+                                onChange={handleChange}
                                 placeholder="First Name"
                                 className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                                required
                             />
                             <input
                                 type="text"
+                                name="lastName"
+                                value={form.lastName}
+                                onChange={handleChange}
                                 placeholder="Last Name"
                                 className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
-                            <input
-                                type="tel"
-                                placeholder="Phone Number"
-                                className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                                required
                             />
                         </div>
 
                         <input
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder="Email"
+                            className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                            required
+                        />
+
+                        <input
                             type="password"
+                            name="password"
+                            value={form.password}
+                            onChange={handleChange}
                             placeholder="Password"
                             className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                            required
                         />
                         <input
                             type="password"
+                            name="confirmPassword"
+                            value={form.confirmPassword}
+                            onChange={handleChange}
                             placeholder="Confirm Password"
                             className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                            required
                         />
 
-                        <label className="flex items-center gap-2 text-sm">
-                            <input type="checkbox" className="w-4 h-4" />
-                            I agree to all the{" "}
-                            <a href="#" className="text-red-500 hover:underline">
-                                Terms
-                            </a>{" "}
-                            and{" "}
-                            <a href="#" className="text-red-500 hover:underline">
-                                Privacy Policies
-                            </a>
-                        </label>
-
-                        <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-                            Create account
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+                            disabled={loading}
+                        >
+                            {loading ? "Creating account..." : "Create account"}
                         </button>
                     </form>
 

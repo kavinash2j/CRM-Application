@@ -1,12 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-const deals = [
-    { id: 101, customerId: 1, address: "2893 Austin Secret Lane", status: "In Progress", price: "$6000" },
-    { id: 102, customerId: 1, address: "4409 Haul Road", status: "Closed", price: "$5000" },
-    { id: 103, customerId: 2, address: "579 Godfrey Street", status: "In Progress", price: "$4000" },
-];
 
-export default function ListPage() {
+
+export default function ListPage({ deals }) {
     const navigate = useNavigate();
 
     return (
@@ -30,9 +26,7 @@ export default function ListPage() {
                             <thead>
                                 <tr className="text-left text-gray-500 text-sm border-b">
                                     <th className="p-3">Address</th>
-                                    <th className="p-3">Price</th>
                                     <th className="p-3">Status</th>
-                                    <th className="p-3">Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,7 +37,6 @@ export default function ListPage() {
                                         onClick={() => navigate(`/deals/${deal.id}`)}
                                     >
                                         <td className="p-3">{deal.address}</td>
-                                        <td className="p-3">{deal.price}</td>
                                         <td className="p-3">
                                             <span
                                                 className={`px-3 py-1 rounded-full text-xs font-medium ${deal.status === "In Progress"
@@ -54,7 +47,7 @@ export default function ListPage() {
                                                 {deal.status}
                                             </span>
                                         </td>
-                                        <td className="p-3 text-gray-500">✏️</td>
+
                                     </tr>
                                 ))}
                             </tbody>

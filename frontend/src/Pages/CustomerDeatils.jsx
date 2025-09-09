@@ -30,7 +30,7 @@ export default function CustomerDetails({ customers, deals }) {
                     <div className="bg-white rounded-2xl shadow p-6 mb-6">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-6">
-                                <img src={customer.avatar} alt={customer.name} className="w-20 h-20 rounded-full" />
+                                <img src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} alt={customer.name} className="w-20 h-20 rounded-full" />
                                 <div>
                                     <h2 className="text-xl font-bold">{customer.name}</h2>
                                     <p className="text-gray-600">{customer.email}</p>

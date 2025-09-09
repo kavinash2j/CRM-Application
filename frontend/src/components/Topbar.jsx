@@ -13,11 +13,7 @@ export default function Topbar({ title, onAddNew }) {
                     <Plus size={18} /> Add New
                 </button>
                 <Search className="text-gray-500 cursor-pointer" />
-                <img
-                    src="https://i.pravatar.cc/40"
-                    alt="Profile"
-                    className="w-10 h-10 rounded-full border"
-                />
+
             </div>
         </div>
     );

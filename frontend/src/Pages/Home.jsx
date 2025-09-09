@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar";
 import Topbar from "../components/toPBAR";
 import Dashboard from "../components/Dashboard";
 
-function Home() {
+function Home({ customers, deals }) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -13,7 +13,7 @@ function Home() {
             <Sidebar />
             <div className="flex flex-col flex-1">
                 <Topbar title="Dashboard" onAddNew={() => setShowModal(true)} />
-                <Dashboard />
+                <Dashboard customers={customers} deals={deals} />
             </div>
 
             {showModal && <AddNewModal onClose={() => setShowModal(false)} />}
