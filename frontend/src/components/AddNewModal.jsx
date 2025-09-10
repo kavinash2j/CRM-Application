@@ -4,11 +4,11 @@ import { ArrowRight } from "lucide-react";
 
 // 👉 you’ll create these files yourself
 import AddCustomer from "./AddCustomer";
-import AddDeal from "./AddDeal";
+import AddLead from "./AddLead";
 
 export default function AddNewModal({ onClose }) {
     const [step, setStep] = useState("choose"); // "choose" | "form"
-    const [type, setType] = useState(null); // "deal" | "customer"
+    const [type, setType] = useState(null); // "lead" | "customer"
 
     return (
         <AnimatePresence>
@@ -31,12 +31,12 @@ export default function AddNewModal({ onClose }) {
                         <div className="space-y-3">
                             <button
                                 onClick={() => {
-                                    setType("deal");
+                                    setType("lead");
                                     setStep("form");
                                 }}
                                 className="flex justify-between items-center w-full px-4 py-3 border rounded-lg hover:bg-gray-50"
                             >
-                                <span className="font-medium">Deal</span>
+                                <span className="font-medium">Lead</span>
                                 <ArrowRight className="w-5 h-5 text-gray-500" />
                             </button>
                             <button
@@ -67,7 +67,7 @@ export default function AddNewModal({ onClose }) {
                         {type === "customer" ? (
                             <AddCustomer onClose={onClose} setStep={setStep} />
                         ) : (
-                            <AddDeal onClose={onClose} setStep={setStep} />
+                            <AddLead onClose={onClose} setStep={setStep} />
                         )}
                     </>
                 )}

@@ -36,40 +36,39 @@ export default function Signup() {
         setLoading(true);
 
         try {
-            // 1️⃣ Register the user
             await axios.post("http://localhost:3000/api/register", {
                 name: `${form.firstName} ${form.lastName}`,
                 email: form.email,
                 password: form.password,
-            }).then(() => {
+            }, {
+                withCredentials: true, // only needed if you’re using cookies/sessions
+            }).then(async () => {
                 setSuccess("Account created successfully!");
+                const loginRes = await axios.post("http://localhost:3000/api/login", {
+                    email: form.email,
+                    password: form.password,
+                }, {
+                    withCredentials: true, // only needed if you’re using cookies/sessions
+                });
+
+                const token = loginRes.data.token;
+                localStorage.setItem("token", token);
+                console.log(token);
+
+                navigate("/dashboard");
+
+                setForm({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                });
             }).catch((err) => {
+                setError(err.response?.data?.message || "Something went wrong");
                 console.log(err);
             });
 
-
-
-            // 2️⃣ Automatically log in the user
-            const loginRes = await axios.post("http://localhost:3000/api/login", {
-                email: form.email,
-                password: form.password,
-            });
-
-            // 3️⃣ Store token from login
-            const token = loginRes.data.token;
-            localStorage.setItem("token", token);
-
-            // 4️⃣ Redirect to dashboard
-            navigate("/login");
-
-            // Reset form
-            setForm({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-            });
 
         } catch (err) {
             setError(err.response?.data?.message || "Something went wrong");
@@ -81,12 +80,10 @@ export default function Signup() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
             <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-                {/* Left Section (Image) */}
                 <div className="bg-gray-100 flex items-center justify-center p-6">
                     <img src="/loginimage.jpg" alt="Signup" className="max-h-[400px] object-contain" />
                 </div>
 
-                {/* Right Section */}
                 <div className="p-10 flex flex-col justify-center">
                     <h2 className="text-3xl font-bold mb-2">Sign up</h2>
                     <p className="text-gray-500 mb-6">

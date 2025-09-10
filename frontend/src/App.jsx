@@ -1,203 +1,54 @@
 import Home from "./Pages/home";
 import Login from "./Pages/login";
 import Signup from "./Pages/Signup";
-import Deal from "./Pages/Deal";
+import Leads from "./Pages/Leads.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useRef } from "react";
-import DealDetails from "./Pages/DealDetails";
+import { useRef, useState } from "react";
+import LeadsDetails from "./Pages/LeadsDetails.jsx";
 import Customers from "./Pages/Customers";
-import CustomerDetails from "./Pages/CustomerDeatils";
+import CustomerDetails from "./Pages/CustomerDeatils.jsx";
+import UserProtected from '../wrapComponents/userProtected.jsx'
+
 
 export default function App() {
-  let ref = useRef(null);
 
-  const customers = [
-    {
-      id: 1,
-      name: "Deanna Annis",
-      email: "deannannis@gmail.com",
-      phone: "999-999-9999",
-      address: "475 Spruce Drive, Pittsburgh, PA 23592",
-    },
-    {
-      id: 2,
-      name: "George Gamble",
-      email: "goergegamble@gmail.com",
-      phone: "999-999-9999",
-      address: "2213 Thorn Street, Glenrock, WY 12345",
-    },
-    {
-      id: 3,
-      name: "Andrea Willis",
-      email: "andreawillis@gmail.com",
-      phone: "999-999-9999",
-      address: "1952 Chicago Avenue, Fresno, CA 93711",
-    },
-    {
-      id: 4,
-      name: "Michael Johnson",
-      email: "michael.johnson@gmail.com",
-      phone: "888-555-1212",
-      address: "742 Evergreen Terrace, Springfield, IL 62704",
-    },
-    {
-      id: 5,
-      name: "Sophia Brown",
-      email: "sophia.brown@gmail.com",
-      phone: "777-444-3333",
-      address: "1600 Pennsylvania Avenue, Washington, DC 20500",
-    },
-    {
-      id: 6,
-      name: "Daniel Lee",
-      email: "daniel.lee@gmail.com",
-      phone: "666-222-1111",
-      address: "99 Market Street, San Francisco, CA 94105",
-    },
-    {
-      id: 7,
-      name: "Olivia Martinez",
-      email: "olivia.martinez@gmail.com",
-      phone: "555-111-2222",
-      address: "120 Broadway, New York, NY 10005",
-    },
-    {
-      id: 8,
-      name: "James Anderson",
-      email: "james.anderson@gmail.com",
-      phone: "444-333-2222",
-      address: "500 Lakeshore Drive, Chicago, IL 60611",
-    },
-    {
-      id: 9,
-      name: "Emma Davis",
-      email: "emma.davis@gmail.com",
-      phone: "333-222-1111",
-      address: "15 Ocean View Road, Miami, FL 33101",
-    },
-    {
-      id: 10,
-      name: "William Thompson",
-      email: "william.thompson@gmail.com",
-      phone: "222-999-8888",
-      address: "78 Hilltop Avenue, Denver, CO 80202",
-    },
-  ];
-
-
-  const deals = [
-    {
-      id: 1,
-      customerId: 1,
-      title: "Website Redesign Project",
-      address: "2893 Austin Secret Lane",
-      description: "Redesign corporate website to improve user experience.",
-      status: "Contacted",
-      value: "5000",
-      createdAt: "2025-09-01",
-    },
-    {
-      id: 2,
-      customerId: 1,
-      title: "Mobile App Development",
-      address: "2893 Austin Secret Lane",
-      description: "New iOS & Android app for online booking system.",
-      status: "New",
-      value: "12000",
-      createdAt: "2025-09-05",
-    },
-    {
-      id: 3,
-      customerId: 1,
-      title: "SEO Optimization",
-      address: "2893 Austin Secret Lane",
-      description: "Improve search engine ranking for client websites.",
-      status: "Converted",
-      value: "3000",
-      createdAt: "2025-09-07",
-    },
-    {
-      id: 4,
-      customerId: 1,
-      title: "Cloud Migration",
-      address: "1105 Silicon Valley Drive",
-      description: "Migrate legacy applications to AWS cloud.",
-      status: "In Progress",
-      value: "15000",
-      createdAt: "2025-09-08",
-    },
-    {
-      id: 5,
-      customerId: 2,
-      title: "E-commerce Platform",
-      address: "2213 Thorn Street",
-      description: "Build a scalable e-commerce platform with payment integration.",
-      status: "New",
-      value: "25000",
-      createdAt: "2025-08-25",
-    },
-    {
-      id: 6,
-      customerId: 2,
-      title: "Digital Marketing Campaign",
-      address: "2213 Thorn Street",
-      description: "Launch ads on Google & Facebook for product promotion.",
-      status: "Contacted",
-      value: "7000",
-      createdAt: "2025-08-30",
-    },
-    {
-      id: 7,
-      customerId: 2,
-      title: "Data Analytics Dashboard",
-      address: "2213 Thorn Street",
-      description: "Develop BI dashboard with charts & KPIs.",
-      status: "Converted",
-      value: "10000",
-      createdAt: "2025-09-03",
-    },
-    {
-      id: 8,
-      customerId: 3,
-      title: "HR Management System",
-      address: "475 Spruce Drive",
-      description: "Custom HRMS with leave & payroll features.",
-      status: "In Progress",
-      value: "18000",
-      createdAt: "2025-09-04",
-    },
-    {
-      id: 9,
-      customerId: 3,
-      title: "Cybersecurity Audit",
-      address: "475 Spruce Drive",
-      description: "Audit company network for vulnerabilities.",
-      status: "Closed",
-      value: "9000",
-      createdAt: "2025-09-06",
-    },
-    {
-      id: 10,
-      customerId: 3,
-      title: "AI Chatbot Integration",
-      address: "475 Spruce Drive",
-      description: "Integrate chatbot into customer support system.",
-      status: "New",
-      value: "12000",
-      createdAt: "2025-09-09",
-    },
-  ];
-
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <Routes>
-      <Route path="/dashboard" element={<Home customers={customers} deals={deals} />} />
+
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/deals" element={<Deal deals={deals} />} />
-      <Route path="/deals/:id" element={<DealDetails deals={deals} customers={customers} />} />
-      <Route path="/customers" element={<Customers customers={customers} />} />
-      <Route path="/customer/:id" element={<CustomerDetails customers={customers} deals={deals} />} />
+      <Route path="/dashboard" element={
+        <UserProtected>
+          <Home showModal={showModal} setShowModal={setShowModal} />
+        </UserProtected>
+
+      } />
+      <Route path="/leads" element={
+        <UserProtected>
+          <Leads showModal={showModal} setShowModal={setShowModal} />
+        </UserProtected>
+
+      } />
+      <Route path="/leads/:id" element={
+        <UserProtected>
+          <LeadsDetails showModal={showModal} setShowModal={setShowModal} />
+        </UserProtected>
+
+      } />
+      <Route path="/customers" element={
+        <UserProtected>
+          <Customers showModal={showModal} setShowModal={setShowModal} />
+        </UserProtected>
+
+      } />
+      <Route path="/customer/:id" element={
+        <UserProtected>
+          <CustomerDetails showModal={showModal} setShowModal={setShowModal} />
+        </UserProtected>
+
+      } />
     </Routes>
   );
 }

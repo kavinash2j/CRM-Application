@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { addCustomer } from "../Redux/DataRedux"; // 👈 adjust path to your file
 
 export default function AddCustomer({ onClose }) {
+    const dispatch = useDispatch();
     const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
+        id: Date.now(), // temoparary unique ID
+        name: "",
         email: "",
         phone: "",
-        street: "",
-        city: "",
-        state: "",
-        zip: "",
+        company: "",
     });
 
     const handleChange = (e) => {
@@ -19,7 +19,7 @@ export default function AddCustomer({ onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("✅ New Customer Added:", form);
+        dispatch(addCustomer(form)); // 🚀 send to redux store
         onClose();
     };
 
@@ -29,48 +29,23 @@ export default function AddCustomer({ onClose }) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-2xl p-6 w-[500px] shadow-xl"
+            className="bg-white rounded-2xl p-6 w-[450px] shadow-xl"
         >
             <h2 className="text-lg font-semibold mb-6">Add New Customer</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Avatar Upload */}
                 <div>
-                    <label className="block text-sm font-medium mb-2">Avatar</label>
-                    <button
-                        type="button"
-                        className="w-20 h-20 border rounded-lg flex items-center justify-center bg-gray-50 hover:bg-gray-100"
-                    >
-                        ADD
-                    </button>
+                    <label className="block text-sm font-medium">Customer Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
+                        required
+                    />
                 </div>
 
-                {/* First + Last Name */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium">First Name</label>
-                        <input
-                            type="text"
-                            name="firstName"
-                            value={form.firstName}
-                            onChange={handleChange}
-                            className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium">Last Name</label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            value={form.lastName}
-                            onChange={handleChange}
-                            className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
-                        />
-                    </div>
-                </div>
-
-                {/* Email + Phone */}
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium">Email</label>
@@ -94,52 +69,17 @@ export default function AddCustomer({ onClose }) {
                     </div>
                 </div>
 
-                {/* Address */}
                 <div>
-                    <label className="block text-sm font-medium">Street Address</label>
+                    <label className="block text-sm font-medium">Company</label>
                     <input
                         type="text"
-                        name="street"
-                        value={form.street}
+                        name="company"
+                        value={form.company}
                         onChange={handleChange}
                         className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
                     />
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium">City</label>
-                        <input
-                            type="text"
-                            name="city"
-                            value={form.city}
-                            onChange={handleChange}
-                            className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium">State / Province</label>
-                        <input
-                            type="text"
-                            name="state"
-                            value={form.state}
-                            onChange={handleChange}
-                            className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium">Zip Code</label>
-                        <input
-                            type="text"
-                            name="zip"
-                            value={form.zip}
-                            onChange={handleChange}
-                            className="mt-1 w-full border rounded-lg px-3 py-2 bg-gray-50 focus:ring-2 focus:ring-indigo-500"
-                        />
-                    </div>
-                </div>
-
-                {/* Footer */}
                 <div className="flex justify-between items-center mt-6">
                     <button
                         type="button"

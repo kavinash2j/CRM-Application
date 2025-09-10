@@ -2,6 +2,7 @@ const userModel = require("../models/User.models");
 const { validationResult } = require("express-validator");
 
 module.exports.loginController = async (req, res) => {
+    console.log("login route hit")
     try {
         const error = validationResult(req);
         if (!error.isEmpty()) {

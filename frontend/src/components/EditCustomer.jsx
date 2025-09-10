@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateCustomer } from "../Redux/DataRedux"; // make sure path is correct
 
 export default function EditCustomer({ customer, onClose }) {
+    const dispatch = useDispatch();
+
+    const [form, setForm] = useState({
+        name: customer.name || "",
+        email: customer.email || "",
+        phone: customer.phone || "",
+        company: customer.company || "",
+    });
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(updateCustomer({ id: customer.id, ...form }));
+        onClose();
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-white/30 z-50">
             <div className="bg-white rounded-2xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6">
@@ -11,36 +32,47 @@ export default function EditCustomer({ customer, onClose }) {
                 </div>
 
                 {/* Form */}
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-600">Name</label>
                         <input
                             type="text"
-                            defaultValue={customer.name}
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 mt-1"
                         />
                     </div>
+
                     <div>
                         <label className="block text-sm font-medium text-gray-600">Email</label>
                         <input
                             type="email"
-                            defaultValue={customer.email}
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 mt-1"
                         />
                     </div>
+
                     <div>
                         <label className="block text-sm font-medium text-gray-600">Phone</label>
                         <input
                             type="text"
-                            defaultValue={customer.phone}
+                            name="phone"
+                            value={form.phone}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 mt-1"
                         />
                     </div>
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-600">Address</label>
-                        <textarea
-                            defaultValue={customer.address}
-                            rows="3"
+                        <label className="block text-sm font-medium text-gray-600">Company</label>
+                        <input
+                            type="text"
+                            name="company"
+                            value={form.company}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 mt-1"
                         />
                     </div>

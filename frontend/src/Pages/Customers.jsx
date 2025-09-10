@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import ListCustomers from "../components/ListCustomers";
+import { useSelector } from "react-redux";
+import AddNewModal from "../components/AddNewModal";
 
-export default function Customers({ customers }) {
+export default function Customers({ showModal, setShowModal }) {
+    const customers = useSelector((state) => state.customers.customers);
 
     return (
         <div className="flex h-screen bg-gray-100">
@@ -12,12 +15,14 @@ export default function Customers({ customers }) {
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col">
-                <Topbar title="Customers" onAddNew={() => alert("Add new customer")} />
+                <Topbar title="Customers" onAddNew={() => setShowModal(true)} />
 
-                <div className="p-6">
-                    <ListCustomers customers={customers} />
+                <div className="h-screen overflow-hidden">
+                    <ListCustomers />
                 </div>
+                {showModal && <AddNewModal onClose={() => setShowModal(false)} />}
             </div>
         </div>
+
     );
 }

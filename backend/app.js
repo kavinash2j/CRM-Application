@@ -6,13 +6,18 @@ const authRoutes = require("./routes/auth.routes");
 const cors = require("cors");
 const customerRoute = require("./routes/customer.routes")
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: "http://localhost:5173", // your React app
+        credentials: true,              // allow cookies / auth headers
+    }
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookies_parser());
 
 app.use("/api", authRoutes);
-
+app.use("/", customerRoute)
 
 app.get("/", (req, res) => {
     res.send("hello")
