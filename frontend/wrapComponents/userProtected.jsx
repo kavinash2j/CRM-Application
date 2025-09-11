@@ -12,10 +12,10 @@ export default function UserProtected({ children }) {
 
                 let token = localStorage.getItem("token");
                 console.log(token);
-                // 2. If no token, rely on cookies (withCredentials)
+
                 const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-                const res = await axios.post("http://localhost:3000/profile", {
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
                     headers,
                 }, {
                     withCredentials: true,

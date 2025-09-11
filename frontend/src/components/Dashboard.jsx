@@ -10,7 +10,6 @@ import {
     Tooltip,
 } from "recharts";
 import { useSelector } from "react-redux";
-import { title } from "process";
 
 export default function Dashboard() {
     const navigate = useNavigate();

@@ -5,6 +5,7 @@ const cookies_parser = require("cookie-parser")
 const authRoutes = require("./routes/auth.routes");
 const cors = require("cors");
 const customerRoute = require("./routes/customer.routes")
+const leadRoute = require("./routes/lead.routes")
 
 app.use(cors(
     {
@@ -17,7 +18,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookies_parser());
 
 app.use("/api", authRoutes);
-app.use("/", customerRoute)
+app.use("/customer", customerRoute)
+// app.use("/lead", leadRoute)
 
 app.get("/", (req, res) => {
     res.send("hello")

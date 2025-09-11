@@ -36,7 +36,7 @@ export default function Signup() {
         setLoading(true);
 
         try {
-            await axios.post("http://localhost:3000/api/register", {
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/register`, {
                 name: `${form.firstName} ${form.lastName}`,
                 email: form.email,
                 password: form.password,
@@ -44,7 +44,7 @@ export default function Signup() {
                 withCredentials: true, // only needed if you’re using cookies/sessions
             }).then(async () => {
                 setSuccess("Account created successfully!");
-                const loginRes = await axios.post("http://localhost:3000/api/login", {
+                const loginRes = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
                     email: form.email,
                     password: form.password,
                 }, {
