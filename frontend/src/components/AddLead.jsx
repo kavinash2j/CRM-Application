@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLead } from "../Redux/DataRedux"; // 👈 adjust path to your file
+import { createLead } from "../Redux/leadThunks";
 
 export default function AddLead({ onClose, setStep }) {
     const dispatch = useDispatch();
@@ -27,12 +28,11 @@ export default function AddLead({ onClose, setStep }) {
         if (!selectedCustomer) return;
 
         const newLead = {
-            id: Date.now(), // unique ID
             customerId: selectedCustomer.id,
             ...formData,
         };
 
-        dispatch(addLead(newLead)); // 👉 send to Redux
+        dispatch(createLead(newLead)); // 👉 send to Redux
         onClose();
     };
 

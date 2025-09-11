@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { addCustomer } from "../Redux/DataRedux"; // 👈 adjust path to your file
+import { createCustomer } from "../Redux/customerThunks";
 
 export default function AddCustomer({ onClose }) {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export default function AddCustomer({ onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addCustomer(form)); // 🚀 send to redux store
+        dispatch(createCustomer(form)); // 🚀 send to redux store
         onClose();
     };
 

@@ -8,6 +8,7 @@ const leadSchema = new mongoose.Schema({
     },
     title: {
         type: String,
+        unique: true,
         required: true
     },
     description: {
@@ -20,7 +21,8 @@ const leadSchema = new mongoose.Schema({
     },
     value: {
         type: Number,
-        default: 0
+        default: 0,
+        require: true
     },
     createdAt: {
         type: Date,

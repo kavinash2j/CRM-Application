@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/User.models.js");
+const { verify } = require("crypto");
 
 const authMiddleware = async (req, res, next) => {
     try {
@@ -16,7 +17,7 @@ const authMiddleware = async (req, res, next) => {
         if (!token && req.cookies?.token) {
             token = req.cookies.token;
         }
-        console.log("token = ", token);
+        console.log("from middlewaer token = ", token);
         if (!token) {
             return res.status(401).json({ message: "No token, authorization denied" });
         }
@@ -39,5 +40,8 @@ const authMiddleware = async (req, res, next) => {
 
     }
 };
+
+
+
 
 module.exports = { authMiddleware };

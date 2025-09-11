@@ -19,7 +19,7 @@ app.use(cookies_parser());
 
 app.use("/api", authRoutes);
 app.use("/customer", customerRoute)
-// app.use("/lead", leadRoute)
+app.use("/lead", leadRoute)
 
 app.get("/", (req, res) => {
     res.send("hello")

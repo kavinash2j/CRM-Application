@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import LeadsDetails from "./Pages/LeadsDetails.jsx";
 import Customers from "./Pages/Customers";
 import CustomerDetails from "./Pages/CustomerDeatils.jsx";
-import UserProtected from '../wrapComponents/userProtected.jsx'
+import UserProtected from './wrapComponents/userProtected.jsx'
 
 
 export default function App() {

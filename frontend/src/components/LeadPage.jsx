@@ -1,5 +1,5 @@
 // src/pages/leads/LeadDetailsContent.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import EditLead from "./EditLead";
@@ -12,11 +12,16 @@ export default function LeadPage({ showModal, setShowModal, leadId }) {
     const leads = useSelector((state) => state.leads.leads);
     const navigate = useNavigate();
     const [isEditingPanel, setIsEditingPanel] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Simulate loading for 1 second
+        const timer = setTimeout(() => setLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
 
     const lead = leads.find((lead) => lead.id === parseInt(leadId));
-    if (!lead) return <div className="p-6">Lead not found</div>;
-
-    const customer = customers.find((c) => c.id === lead.customerId);
+    const customer = customers.find((c) => c.id === lead?.customerId);
 
     // Delete lead handler
     const handleDelete = () => {
@@ -25,6 +30,18 @@ export default function LeadPage({ showModal, setShowModal, leadId }) {
             navigate("/leads"); // Redirect to leads list after deletion
         }
     };
+
+    if (loading) {
+        return (
+            <div className="p-6 flex items-center justify-center">
+                <p className="text-gray-500 animate-pulse">Loading lead details...</p>
+            </div>
+        );
+    }
+
+    if (!lead) {
+        return <div className="p-6 text-red-600 font-medium">❌ Lead not found</div>;
+    }
 
     return (
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
@@ -61,7 +78,9 @@ export default function LeadPage({ showModal, setShowModal, leadId }) {
                         className="w-14 h-14 rounded-full border object-cover"
                     />
                     <div>
-                        <p className="font-semibold text-gray-900 text-lg">{customer?.name || "Unknown Customer"}</p>
+                        <p className="font-semibold text-gray-900 text-lg">
+                            {customer?.name || "Unknown Customer"}
+                        </p>
                         <p className="text-sm text-gray-500">
                             {customer?.email || "No email"} • {customer?.phone || "No phone"}
                         </p>
@@ -90,7 +109,9 @@ export default function LeadPage({ showModal, setShowModal, leadId }) {
             <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Description</h3>
                 <div className="p-5 border rounded-xl bg-gray-50 shadow-sm">
-                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">{lead.description}</p>
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                        {lead.description}
+                    </p>
                 </div>
             </div>
 

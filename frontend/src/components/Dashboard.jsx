@@ -98,12 +98,16 @@ export default function Dashboard() {
                         </Link>
                     </div>
                     <ul className="mt-4 space-y-3">
-                        {leads.slice(0, 4).map((lead) => (
-                            <li key={lead.id} className="flex justify-between text-sm">
-                                <span>{lead.title}</span>
-                                <span>${lead.value}</span>
-                            </li>
-                        ))}
+                        {leads.length > 0 ? (
+                            leads.slice(0, 4).map((lead) => (
+                                <li key={lead.id} className="flex justify-between text-sm">
+                                    <span>{lead.title}</span>
+                                    <span>${lead.value}</span>
+                                </li>
+                            ))
+                        ) : (
+                            <p className="text-gray-500 text-sm">No leads available</p>
+                        )}
                     </ul>
                 </div>
 
@@ -132,6 +136,7 @@ export default function Dashboard() {
             {/* Right Section */}
             <div className="col-span-4 flex flex-col gap-6">
                 {/* Customers List */}
+                {/* Customers List */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm">
                     <div className="flex justify-between items-center">
                         <h2 className="font-semibold">Customers</h2>
@@ -140,14 +145,19 @@ export default function Dashboard() {
                         </Link>
                     </div>
                     <ul className="mt-4 space-y-3">
-                        {customers.slice(0, 9).map((c) => (
-                            <li key={c.id}>
-                                <p className="font-medium">{c.name}</p>
-                                <p className="text-xs text-gray-500">{c.email}</p>
-                            </li>
-                        ))}
+                        {customers.length > 0 ? (
+                            customers.slice(0, 9).map((c) => (
+                                <li key={c.id}>
+                                    <p className="font-medium">{c.name}</p>
+                                    <p className="text-xs text-gray-500">{c.email}</p>
+                                </li>
+                            ))
+                        ) : (
+                            <p className="text-gray-500 text-sm">No customers available</p>
+                        )}
                     </ul>
                 </div>
+
 
             </div>
         </div>
