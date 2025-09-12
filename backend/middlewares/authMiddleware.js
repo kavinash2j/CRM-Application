@@ -15,7 +15,7 @@ const authMiddleware = async (req, res, next) => {
 
         // 2. If not in header, check cookies
         if (!token && req.cookies?.token) {
-            // console.log("token from cookie", req.cookies)
+            console.log("token from cookie", req.cookies)
             token = req.cookies.token;
         }
         // console.log("from middlewaer token = ", token);
