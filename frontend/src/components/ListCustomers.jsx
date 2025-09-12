@@ -13,12 +13,8 @@ export default function ListCustomers() {
                     Total: <span className="text-indigo-600">{customers.length}</span> customers
                 </p>
                 <div className="flex gap-3">
-                    <button className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:border-indigo-300 hover:text-indigo-600 transition-all">
-                        Sort by: Date Created
-                    </button>
-                    <button className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:border-indigo-300 hover:text-indigo-600 transition-all">
-                        Filter
-                    </button>
+
+
                 </div>
             </div>
 

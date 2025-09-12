@@ -53,7 +53,7 @@ export default function Signup() {
 
                 const token = loginRes.data.token;
                 localStorage.setItem("token", token);
-                console.log(token);
+                // console.log(token);
 
                 navigate("/dashboard");
 
@@ -66,7 +66,7 @@ export default function Signup() {
                 });
             }).catch((err) => {
                 setError(err.response?.data?.message || "Something went wrong");
-                console.log(err);
+                // console.log(err);
             });
 
 

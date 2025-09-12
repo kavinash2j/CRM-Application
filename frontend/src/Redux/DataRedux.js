@@ -80,12 +80,12 @@ export const leadsSlice = createSlice({
             .addCase(fetchLeads.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
-                console.log("this the pending state")
+                // console.log("this the pending state")
             })
             .addCase(fetchLeads.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.leads = action.payload;
-                console.log("this the fulfilled state")
+                // console.log("this the fulfilled state")
             })
             .addCase(fetchLeads.rejected, (state) => {
                 state.isLoading = false;
@@ -146,7 +146,7 @@ export const userSlice = createSlice({
             .addCase(logoutUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
-                console.error("Logout failed:", action.payload);
+                // console.error("Logout failed:", action.payload);
             });
     },
 });

@@ -11,7 +11,7 @@ module.exports.getCustomer = async (req, res) => {
         res.status(200).json(customers); // return only this user's customers
     } catch (err) {
 
-        console.error("Error fetching customers:", err);
+        // console.error("Error fetching customers:", err);
         res.status(500).json({ message: "Failed to fetch customers", error: err.message });
 
     }
@@ -41,7 +41,7 @@ module.exports.deleteCustomer = async (req, res) => {
             return res.sendStatus(500);
         }
     } catch (err) {
-        console.error("Error deleting customer:", err);
+        // console.error("Error deleting customer:", err);
         return res.sendStatus(500);
     }
 };
@@ -68,7 +68,7 @@ module.exports.updateCustomer = async (req, res) => {
 
         res.status(200).json({ message: "Customer updated successfully", customer: updatedCustomer });
     } catch (err) {
-        console.error("Error updating customer:", err);
+        // console.error("Error updating customer:", err);
         res.status(500).json({ message: "Failed to update customer", error: err.message });
     }
 };
@@ -76,12 +76,12 @@ module.exports.updateCustomer = async (req, res) => {
 
 module.exports.addCustomer = async (req, res) => {
 
-    console.log("route hit new  cutsomer hit")
+    // console.log("route hit new  cutsomer hit")
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    console.log("route hit new  cutsomer hit - 2")
+    // console.log("route hit new  cutsomer hit - 2")
     try {
         const { name, email, phone, company } = req.body;
 
@@ -90,7 +90,7 @@ module.exports.addCustomer = async (req, res) => {
         }
 
         // ownerId comes from verified token
-        console.log(req.user);
+        // console.log(req.user);
         const ownerId = req.user.id;
         // console.log();
         const newCustomer = new customerModel({
@@ -104,7 +104,7 @@ module.exports.addCustomer = async (req, res) => {
         await newCustomer.save();
         res.status(201).json({ message: "Customer added successfully", customer: newCustomer });
     } catch (err) {
-        console.error("Error adding customer:", err);
+        // console.error("Error adding customer:", err);
         res.status(500).json({ error: "Failed to add customer" });
     }
 };

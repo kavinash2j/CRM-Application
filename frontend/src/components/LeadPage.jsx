@@ -8,7 +8,7 @@ import { fetchCustomers } from "../Redux/customerThunks"
 
 export default function LeadPage({ showModal, setShowModal }) {
     const { _id } = useParams();
-    console.log("_id ", _id);
+    // console.log("_id ", _id);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function LeadPage({ showModal, setShowModal }) {
     const lead = leads.find((lead) => lead._id === _id);
     const customer = customers.find((c) => c._id === lead?.customerId);
 
-    console.log("lead ", lead);
+    // console.log("lead ", lead);
 
     const handleDelete = () => {
 

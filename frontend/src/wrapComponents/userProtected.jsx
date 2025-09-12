@@ -16,16 +16,16 @@ export default function UserProtected({ children }) {
             try {
 
                 let token = localStorage.getItem("token");
-                console.log("token ", token);
+                // console.log("token ", token);
                 if (token) {
                     const headers = { Authorization: `Bearer ${token}` };
-                    console.log(headers);
+                    // console.log(headers);
                     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
                         headers,
                         withCredentials: true,
                     });
                     dispatch(login(res.data));
-                    console.log("response from profile", res);
+                    // console.log("response from profile", res);
 
                     if (res.status === 200) {
                         setIsAuthenticated(true);

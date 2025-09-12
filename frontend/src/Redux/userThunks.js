@@ -18,7 +18,7 @@ export const logoutUser = createAsyncThunk(
             );
 
             localStorage.removeItem("token");
-            console.log("user logout ", resp);
+            // console.log("user logout ", resp);
             return resp.data; // return backend response
 
         } catch (err) {
