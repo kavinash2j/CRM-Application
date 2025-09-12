@@ -21,8 +21,8 @@ app.use("/api", authRoutes);
 app.use("/customer", customerRoute)
 app.use("/lead", leadRoute)
 
-app.get("/", (req, res) => {
-    res.send("hello")
+app.get("/test", (req, res) => {
+    res.send("hello this testing url")
 })
 
 
