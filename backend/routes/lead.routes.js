@@ -6,7 +6,6 @@ const { body } = require("express-validator");
 
 
 router.route("/:id")
-    .get(authMiddleware, leadController.getLead)
     .delete(authMiddleware, leadController.deleteLead)
     .put(authMiddleware, leadController.updateLead)
 
@@ -34,6 +33,6 @@ router.post("/new",
             .withMessage("Description must be text"),
     ],
     leadController.addLead);
-
+router.get("/profile", authMiddleware, leadController.getLead);
 
 module.exports = router

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchLeads, createLead, editLead, removeLead } from "./leadThunks";
-import { fetchCustomers, createCustomer, editCustomer, removeCustomer } from "./customerThunks";
+import { fetchLeads, createLead, updateLead, deleteLead } from "./leadThunks";
+import { fetchCustomers, createCustomer, updateCustomer, deleteCustomer } from "./customerThunks";
 
 export const customerSlice = createSlice({
     name: "customers",
+
     initialState: {
         customers: [],
         isLoading: false,
@@ -15,21 +16,6 @@ export const customerSlice = createSlice({
         },
         addCustomer: (state, action) => {
             state.customers.push(action.payload);
-        },
-        updateCustomer: (state, action) => {
-            const { id } = action.payload;
-            const index = state.customers.findIndex((c) => c.id === id || c._id === id);
-            if (index !== -1) {
-                state.customers[index] = {
-                    ...state.customers[index],
-                    ...action.payload,
-                };
-            }
-        },
-        deleteCustomer: (state, action) => {
-            state.customers = state.customers.filter(
-                (c) => c.id !== action.payload && c._id !== action.payload
-            );
         },
     },
     extraReducers: (builder) => {
@@ -54,10 +40,10 @@ export const customerSlice = createSlice({
             })
 
             // update
-            .addCase(editCustomer.fulfilled, (state, action) => {
+            .addCase(updateCustomer.fulfilled, (state, action) => {
                 const updated = action.payload;
                 const index = state.customers.findIndex(
-                    (c) => c.id === updated.id || c._id === updated._id
+                    (c) => c._id === updated._id || c._id === updated._id
                 );
                 if (index !== -1) {
                     state.customers[index] = updated;
@@ -65,9 +51,9 @@ export const customerSlice = createSlice({
             })
 
             // delete
-            .addCase(removeCustomer.fulfilled, (state, action) => {
+            .addCase(deleteCustomer.fulfilled, (state, action) => {
                 state.customers = state.customers.filter(
-                    (c) => c.id !== action.payload && c._id !== action.payload
+                    (c) => c._id !== action.payload && c._id !== action.payload
                 );
             });
     },
@@ -84,16 +70,6 @@ export const leadsSlice = createSlice({
         addLead: (state, action) => {
             state.leads.push(action.payload);
         },
-        updateLead: (state, action) => {
-            const { id } = action.payload;
-            const index = state.leads.findIndex((l) => l.id === id);
-            if (index !== -1) {
-                state.leads[index] = { ...state.leads[index], ...action.payload };
-            }
-        },
-        deleteLead: (state, action) => {
-            state.leads = state.leads.filter((l) => l.id !== action.payload);
-        },
         setLeads: (state, action) => {
             state.leads = action.payload;
         },
@@ -103,10 +79,12 @@ export const leadsSlice = createSlice({
             .addCase(fetchLeads.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
+                console.log("this the pending state")
             })
             .addCase(fetchLeads.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.leads = action.payload;
+                console.log("this the fulfilled state")
             })
             .addCase(fetchLeads.rejected, (state) => {
                 state.isLoading = false;
@@ -119,23 +97,23 @@ export const leadsSlice = createSlice({
             })
 
             // update existing lead
-            .addCase(editLead.fulfilled, (state, action) => {
-                const { id } = action.payload;
-                const index = state.leads.findIndex((l) => l.id === id);
+            .addCase(updateLead.fulfilled, (state, action) => {
+                const { _id } = action.payload;
+                const index = state.leads.findIndex((l) => l._id === _id);
                 if (index !== -1) {
                     state.leads[index] = { ...state.leads[index], ...action.payload };
                 }
             })
 
             // delete lead
-            .addCase(removeLead.fulfilled, (state, action) => {
-                state.leads = state.leads.filter((l) => l.id !== action.payload);
+            .addCase(deleteLead.fulfilled, (state, action) => {
+                state.leads = state.leads.filter((l) => l._id !== action.payload);
             });
     }
 })
 
-export const { addCustomer, updateCustomer, deleteCustomer } = customerSlice.actions;
-export const { addLead, updateLead, deleteLead } = leadsSlice.actions;
+export const { addCustomer } = customerSlice.actions;
+export const { addLead } = leadsSlice.actions;
 
 
 export const customerReducer = customerSlice.reducer;

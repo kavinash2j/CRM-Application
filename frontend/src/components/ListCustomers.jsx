@@ -34,8 +34,8 @@ export default function ListCustomers() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {customers.map((customer) => (
                             <div
-                                key={customer.id}
-                                onClick={() => navigate(`/customer/${customer.id}`)}
+                                key={customer._id}
+                                onClick={() => navigate(`/customer/${customer._id}`)}
                                 className="cursor-pointer bg-white rounded-2xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-all duration-200 flex flex-col"
                             >
                                 {/* Avatar + Name */}

@@ -69,13 +69,13 @@ export default function ListPage() {
                                     <tbody>
                                         {leads.map((lead, idx) => (
                                             <tr
-                                                key={lead.id}
+                                                key={lead._id}
                                                 className={`cursor-pointer transition-colors ${idx % 2 === 0
                                                     ? "bg-white"
                                                     : "bg-gray-50"
                                                     } hover:bg-indigo-50`}
                                                 onClick={() =>
-                                                    navigate(`/leads/${lead.id}`)
+                                                    navigate(`/leads/${lead._id}`)
                                                 }
                                             >
                                                 <td className="p-4 text-gray-700">

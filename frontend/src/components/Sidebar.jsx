@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Home, Users, Briefcase } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
     const location = useLocation();
+    const [expanded, setExpanded] = useState(false);
 
     const menuItems = [
         { name: "Dashboard", icon: Home, path: "/dashboard" },
@@ -12,18 +13,23 @@ export default function Sidebar() {
     ];
 
     return (
-        <div className="group h-screen">
-            <div className="w-20 group-hover:w-60 h-full bg-gradient-to-b from-indigo-600 to-indigo-800 shadow-xl flex flex-col py-6 px-4 transition-all duration-300 rounded-r-2xl">
+        <div className="h-screen">
+            <div
+                onMouseEnter={() => setExpanded(true)}
+                onMouseLeave={() => setExpanded(false)}
+                className={`${expanded ? "w-60" : "w-20"
+                    } h-full bg-gradient-to-b from-indigo-600 to-indigo-800 shadow-xl flex flex-col py-6 px-4 rounded-r-2xl transition-[width] duration-300 ease-in-out`}
+            >
                 {/* Logo */}
                 <div className="mb-10 flex items-center w-full overflow-hidden">
                     <div className="w-12 h-12 bg-white rounded-2xl flex-shrink-0 flex items-center justify-center text-indigo-600 font-bold shadow-md">
                         E
                     </div>
                     <span
-                        className="ml-3 font-extrabold text-white text-xl 
-            opacity-0 translate-x-[-10px] 
-            group-hover:opacity-100 group-hover:translate-x-0 
-            transition-all duration-300 whitespace-nowrap"
+                        className={`ml-3 font-extrabold text-white text-xl whitespace-nowrap transition-all duration-300 ${expanded
+                            ? "opacity-100 translate-x-0"
+                            : "opacity-0 -translate-x-2"
+                            }`}
                     >
                         Enterprise
                     </span>
@@ -42,16 +48,15 @@ export default function Sidebar() {
                                     : "hover:bg-indigo-500/30"
                                     }`}
                             >
-                                {/* Left Active Indicator */}
                                 {active && (
                                     <span className="absolute left-0 top-0 w-1 h-full bg-white rounded-r-lg"></span>
                                 )}
-
                                 <Icon className="w-6 h-6 flex-shrink-0" />
                                 <span
-                                    className="opacity-0 translate-x-[-10px] 
-                  group-hover:opacity-100 group-hover:translate-x-0 
-                  transition-all duration-300 whitespace-nowrap font-medium"
+                                    className={`whitespace-nowrap font-medium transition-all duration-300 ${expanded
+                                        ? "opacity-100 translate-x-0"
+                                        : "opacity-0 -translate-x-2"
+                                        }`}
                                 >
                                     {name}
                                 </span>
@@ -61,11 +66,16 @@ export default function Sidebar() {
                 </nav>
 
                 {/* Footer */}
-                <div className="mt-auto pt-6 border-t border-indigo-500/40 flex flex-col items-center group-hover:items-start gap-2">
+                <div className="mt-auto pt-6 border-t border-indigo-500/40 flex flex-col items-center gap-2">
                     <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-indigo-600 font-bold shadow cursor-pointer hover:scale-105 transition">
                         A
                     </div>
-                    <span className="hidden group-hover:block text-white text-sm font-medium">
+                    <span
+                        className={`text-white text-sm font-medium transition-all duration-300 ${expanded
+                            ? "opacity-100 translate-x-0 mt-1"
+                            : "opacity-0 -translate-x-2"
+                            }`}
+                    >
                         Avinash
                     </span>
                 </div>

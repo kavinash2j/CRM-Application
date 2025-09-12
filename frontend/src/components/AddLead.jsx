@@ -28,7 +28,7 @@ export default function AddLead({ onClose, setStep }) {
         if (!selectedCustomer) return;
 
         const newLead = {
-            customerId: selectedCustomer.id,
+            customerId: selectedCustomer._id,
             ...formData,
         };
 
@@ -52,9 +52,9 @@ export default function AddLead({ onClose, setStep }) {
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                 {customers.map((customer) => (
                                     <div
-                                        key={customer.id}
+                                        key={customer._id}
                                         onClick={() => setSelectedCustomer(customer)}
-                                        className={`p-3 border rounded-xl cursor-pointer text-center ${selectedCustomer?.id === customer.id
+                                        className={`p-3 border rounded-xl cursor-pointer text-center ${selectedCustomer?._id === customer._id
                                             ? "border-indigo-500 bg-indigo-50"
                                             : "border-gray-200"
                                             }`}

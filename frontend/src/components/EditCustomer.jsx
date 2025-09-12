@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateCustomer } from "../Redux/DataRedux"; // make sure path is correct
+import { updateCustomer } from "../Redux/customerThunks"; // make sure path is correct
+import { useParams } from "react-router-dom";
 
 export default function EditCustomer({ customer, onClose }) {
     const dispatch = useDispatch();
+    const { _id } = useParams();
 
     const [form, setForm] = useState({
         name: customer.name || "",
@@ -18,7 +20,7 @@ export default function EditCustomer({ customer, onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateCustomer({ id: customer.id, ...form }));
+        dispatch(updateCustomer({ _id, customerData: { ...form } }));
         onClose();
     };
 

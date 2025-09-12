@@ -1,33 +1,44 @@
 // src/pages/leads/LeadDetailsContent.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import EditLead from "./EditLead";
-import AddNewModal from "./AddNewModal";
-import { deleteLead } from "../Redux/DataRedux"; // Adjust path
+import { deleteLead, fetchLeads } from "../Redux/leadThunks"; // Adjust path
+import { fetchCustomers } from "../Redux/customerThunks"
 
-export default function LeadPage({ showModal, setShowModal, leadId }) {
+export default function LeadPage({ showModal, setShowModal }) {
+    const { _id } = useParams();
+    console.log("_id ", _id);
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const customers = useSelector((state) => state.customers.customers);
     const leads = useSelector((state) => state.leads.leads);
-    const navigate = useNavigate();
+
     const [isEditingPanel, setIsEditingPanel] = useState(false);
     const [loading, setLoading] = useState(true);
 
+
     useEffect(() => {
-        // Simulate loading for 1 second
-        const timer = setTimeout(() => setLoading(false), 1000);
+
+        const timer = setTimeout(() => setLoading(false), 500);
         return () => clearTimeout(timer);
+
     }, []);
 
-    const lead = leads.find((lead) => lead.id === parseInt(leadId));
-    const customer = customers.find((c) => c.id === lead?.customerId);
+    const lead = leads.find((lead) => lead._id === _id);
+    const customer = customers.find((c) => c._id === lead?.customerId);
 
-    // Delete lead handler
+    console.log("lead ", lead);
+
     const handleDelete = () => {
+
         if (window.confirm("Are you sure you want to delete this lead?")) {
-            dispatch(deleteLead(lead.id));
-            navigate("/leads"); // Redirect to leads list after deletion
+
+            dispatch(deleteLead(lead._id));
+
+            navigate("/leads");
         }
     };
 
@@ -116,7 +127,7 @@ export default function LeadPage({ showModal, setShowModal, leadId }) {
             </div>
 
             {isEditingPanel && <EditLead lead={lead} onClose={() => setIsEditingPanel(false)} />}
-            {showModal && <AddNewModal onClose={() => setShowModal(false)} />}
+
         </div>
     );
 }

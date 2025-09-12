@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { addCustomer } from "../Redux/DataRedux"; // 👈 adjust path to your file
 import { createCustomer } from "../Redux/customerThunks";
 
 export default function AddCustomer({ onClose }) {
     const dispatch = useDispatch();
     const [form, setForm] = useState({
-        id: Date.now(), // temoparary unique ID
         name: "",
         email: "",
         phone: "",

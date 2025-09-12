@@ -2,27 +2,32 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EditCustomer from "./EditCustomer";
-import AddNewModal from "./AddNewModal";
-import { deleteCustomer } from "../Redux/DataRedux"; // Adjust path
+import { deleteCustomer } from "../Redux/customerThunks"; // Adjust path
+import { fetchLeads } from "../Redux/leadThunks";
 
 export const CustomerPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const customers = useSelector((state) => state.customers.customers);
     const leads = useSelector((state) => state.leads.leads);
-    const { id } = useParams();
 
-    const [isisEditingPanel, setIsisEditingPanel] = useState(false);
+    const { _id } = useParams();
 
-    const customer = customers.find((c) => c.id === parseInt(id));
-    const customerLeads = leads.filter((d) => d.customerId === customer.id);
+    const [isEditingPanel, setIsEditingPanel] = useState(false);
+
+    const customer = customers.find((c) => c._id == _id);
+
+    const customerLeads = leads.filter((d) => d.customerId === customer._id);
 
     if (!customer) return <div className="p-6">Customer not found</div>;
 
     // Delete handler
     const handleDelete = () => {
-        if (window.confirm("Are you sure you want to delete this customer?")) {
-            dispatch(deleteCustomer(customer.id));
+        if (window.confirm("Deleting customer can also delete leads associated with it. Are you sure?")) {
+
+            dispatch(deleteCustomer(customer._id));
+
             navigate("/customers"); // redirect to customers list
         }
     };
@@ -66,7 +71,7 @@ export const CustomerPage = () => {
                         {/* Action Buttons */}
                         <div className="flex flex-col gap-2 self-center">
                             <button
-                                onClick={() => setIsisEditingPanel(true)}
+                                onClick={() => setIsEditingPanel(true)}
                                 className="px-5 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-sm transition"
                             >
                                 Edit
@@ -88,12 +93,12 @@ export const CustomerPage = () => {
                         <ul className="grid md:grid-cols-2 gap-6">
                             {customerLeads.map((d) => (
                                 <li
-                                    key={d.id}
-                                    onClick={() => navigate(`/leads/${d.id}`)}
+                                    key={d._id}
+                                    onClick={() => navigate(`/leads/${d._id}`)}
                                     className="p-5 border rounded-xl hover:shadow-md transition bg-gray-50 hover:bg-indigo-50 cursor-pointer"
                                 >
-                                    <p className="font-semibold text-gray-900">{d.address}</p>
-                                    <p className="text-sm text-gray-500 mb-2">₹{d.price}</p>
+                                    <p className="font-semibold text-gray-900">{d.title}</p>
+                                    <p className="text-sm text-gray-500 mb-2">₹{d.value}</p>
                                     <span
                                         className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${d.status === "In Progress"
                                             ? "bg-indigo-100 text-indigo-700"
@@ -111,7 +116,7 @@ export const CustomerPage = () => {
                 </div>
             </div>
 
-            {isisEditingPanel && <EditCustomer customer={customer} onClose={() => setIsisEditingPanel(false)} />}
+            {isEditingPanel && <EditCustomer customer={customer} onClose={() => setIsEditingPanel(false)} />}
         </div>
     );
 };

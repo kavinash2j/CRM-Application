@@ -4,70 +4,70 @@ export const DataContext = createContext();
 export function DataProvider({ children }) {
     const customers = [
         {
-            id: 1,
+            _id: 1,
             name: "Deanna Annis",
             email: "deannannis@gmail.com",
             phone: "999-999-9999",
             address: "475 Spruce Drive, Pittsburgh, PA 23592",
         },
         {
-            id: 2,
+            _id: 2,
             name: "George Gamble",
             email: "goergegamble@gmail.com",
             phone: "999-999-9999",
             address: "2213 Thorn Street, Glenrock, WY 12345",
         },
         {
-            id: 3,
+            _id: 3,
             name: "Andrea Willis",
             email: "andreawillis@gmail.com",
             phone: "999-999-9999",
             address: "1952 Chicago Avenue, Fresno, CA 93711",
         },
         {
-            id: 4,
+            _id: 4,
             name: "Michael Johnson",
             email: "michael.johnson@gmail.com",
             phone: "888-555-1212",
             address: "742 Evergreen Terrace, Springfield, IL 62704",
         },
         {
-            id: 5,
+            _id: 5,
             name: "Sophia Brown",
             email: "sophia.brown@gmail.com",
             phone: "777-444-3333",
             address: "1600 Pennsylvania Avenue, Washington, DC 20500",
         },
         {
-            id: 6,
+            _id: 6,
             name: "Daniel Lee",
             email: "daniel.lee@gmail.com",
             phone: "666-222-1111",
             address: "99 Market Street, San Francisco, CA 94105",
         },
         {
-            id: 7,
+            _id: 7,
             name: "Olivia Martinez",
             email: "olivia.martinez@gmail.com",
             phone: "555-111-2222",
             address: "120 Broadway, New York, NY 10005",
         },
         {
-            id: 8,
+            _id: 8,
             name: "James Anderson",
             email: "james.anderson@gmail.com",
             phone: "444-333-2222",
             address: "500 Lakeshore Drive, Chicago, IL 60611",
         },
         {
-            id: 9,
+            _id: 9,
             name: "Emma Davis",
             email: "emma.davis@gmail.com",
             phone: "333-222-1111",
             address: "15 Ocean View Road, Miami, FL 33101",
         },
         {
-            id: 10,
+            _id: 10,
             name: "William Thompson",
             email: "william.thompson@gmail.com",
             phone: "222-999-8888",
@@ -76,7 +76,7 @@ export function DataProvider({ children }) {
     ];
     const leads = [
         {
-            id: 1,
+            _id: 1,
             customerId: 1,
             title: "Website Redesign Project",
             address: "2893 Austin Secret Lane",
@@ -86,7 +86,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-01",
         },
         {
-            id: 2,
+            _id: 2,
             customerId: 1,
             title: "Mobile App Development",
             address: "2893 Austin Secret Lane",
@@ -96,7 +96,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-05",
         },
         {
-            id: 3,
+            _id: 3,
             customerId: 1,
             title: "SEO Optimization",
             address: "2893 Austin Secret Lane",
@@ -106,7 +106,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-07",
         },
         {
-            id: 4,
+            _id: 4,
             customerId: 1,
             title: "Cloud Migration",
             address: "1105 Silicon Valley Drive",
@@ -116,7 +116,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-08",
         },
         {
-            id: 5,
+            _id: 5,
             customerId: 2,
             title: "E-commerce Platform",
             address: "2213 Thorn Street",
@@ -126,7 +126,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-08-25",
         },
         {
-            id: 6,
+            _id: 6,
             customerId: 2,
             title: "Digital Marketing Campaign",
             address: "2213 Thorn Street",
@@ -136,7 +136,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-08-30",
         },
         {
-            id: 7,
+            _id: 7,
             customerId: 2,
             title: "Data Analytics Dashboard",
             address: "2213 Thorn Street",
@@ -146,7 +146,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-03",
         },
         {
-            id: 8,
+            _id: 8,
             customerId: 3,
             title: "HR Management System",
             address: "475 Spruce Drive",
@@ -156,7 +156,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-04",
         },
         {
-            id: 9,
+            _id: 9,
             customerId: 3,
             title: "Cybersecurity Audit",
             address: "475 Spruce Drive",
@@ -166,7 +166,7 @@ export function DataProvider({ children }) {
             createdAt: "2025-09-06",
         },
         {
-            id: 10,
+            _id: 10,
             customerId: 3,
             title: "AI Chatbot Integration",
             address: "475 Spruce Drive",

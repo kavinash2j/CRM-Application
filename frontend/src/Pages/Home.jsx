@@ -3,7 +3,8 @@ import { useState } from "react";
 import AddNewModal from "../components/AddNewModal";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../components/dashboard";
+
 
 function Home({ showModal, setShowModal }) {
 

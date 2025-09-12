@@ -5,9 +5,11 @@ const customerControllers = require("../controllers/customer.controller")
 const { body } = require("express-validator");
 
 router.route("/:id")
-    .get(authMiddleware, customerControllers.getCustomer)
     .delete(authMiddleware, customerControllers.deleteCustomer)
     .put(authMiddleware, customerControllers.updateCustomer)
+
+router.get("/profile", authMiddleware, customerControllers.getCustomer)
+
 
 router.post("/new", authMiddleware, [
     body("name")

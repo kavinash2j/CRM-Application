@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import LeadPage from "../components/LeadPage";
+import AddNewModal from "../components/AddNewModal";
 
-export default function LeadDetails() {
-    const { id } = useParams();
-    const [showModal, setShowModal] = useState(false);
+export default function LeadDetails({ showModal, setShowModal }) {
 
     return (
         <div className="flex h-screen bg-gray-100">
@@ -15,8 +14,9 @@ export default function LeadDetails() {
 
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Topbar title="Lead Details" onAddNew={() => setShowModal(true)} />
-                <LeadPage leadId={id} showModal={showModal} setShowModal={setShowModal} />
+                <LeadPage showModal={showModal} setShowModal={setShowModal} />
             </div>
+            {showModal && <AddNewModal onClose={() => setShowModal(false)} />}
         </div>
     );
 }

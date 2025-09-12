@@ -1,17 +1,78 @@
 const { validationResult } = require("express-validator")
 const customerModel = require("../models/customer.models")
+const leadModel = require("../models/lead.models");
 
 module.exports.getCustomer = async (req, res) => {
+    try {
+        const userId = req.user.id; // assuming you already verified the token and set req.user
 
-}
+        const customers = await customerModel.find({ ownerId: userId });
+
+        res.status(200).json(customers); // return only this user's customers
+    } catch (err) {
+
+        console.error("Error fetching customers:", err);
+        res.status(500).json({ message: "Failed to fetch customers", error: err.message });
+
+    }
+};
 
 module.exports.deleteCustomer = async (req, res) => {
-    res.send("this is Customer delete route")
-}
+    try {
+        const { id } = req.params;
+        const userId = req.user._id;
 
+        // 🔹 Check ownership of customer
+        const customer = await customerModel.findOne({ _id: id, ownerId: userId });
+        if (!customer) {
+            return res.sendStatus(404);
+        }
+
+        // 🔹 Delete customer
+        const deletedCustomer = await customerModel.findByIdAndDelete(id);
+
+        // 🔹 Delete related leads
+        const deletedLeads = await leadModel.deleteMany({ customerId: id });
+
+        // 🔹 Verify both deletions
+        if (deletedCustomer && deletedLeads.acknowledged) {
+            return res.sendStatus(200);
+        } else {
+            return res.sendStatus(500);
+        }
+    } catch (err) {
+        console.error("Error deleting customer:", err);
+        return res.sendStatus(500);
+    }
+};
+
+
+const Customer = require("../models/customer.models");
+
+// 🔹 Update customer
 module.exports.updateCustomer = async (req, res) => {
-    res.send("this is Customer update route")
-}
+    try {
+
+        const { id } = req.params;   // customer ID from URL
+        const customerData = req.body;    // updated fields from body
+
+        const updatedCustomer = await customerModel.findByIdAndUpdate(
+            id,
+            customerData,
+            { new: true, runValidators: true } // return updated doc, validate against schema
+        );
+
+        if (!updatedCustomer) {
+            return res.status(404).json({ message: "Customer not found" });
+        }
+
+        res.status(200).json({ message: "Customer updated successfully", customer: updatedCustomer });
+    } catch (err) {
+        console.error("Error updating customer:", err);
+        res.status(500).json({ message: "Failed to update customer", error: err.message });
+    }
+};
+
 
 module.exports.addCustomer = async (req, res) => {
 

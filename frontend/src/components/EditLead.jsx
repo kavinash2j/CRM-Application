@@ -1,37 +1,36 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateLead } from "../Redux/DataRedux"; // adjust path to your slice
+import { updateLead } from "../Redux/leadThunks";
+import { useParams } from "react-router-dom";
 
 export default function EditLead({ lead, onClose }) {
     const dispatch = useDispatch();
+    const { _id } = useParams();
 
-    // Initialize state with lead data
-    const [title, setTitle] = useState(lead?.title || "");
-    const [description, setDescription] = useState(lead?.description || "");
-    const [status, setStatus] = useState(lead?.status || "Pending");
-    const [value, setValue] = useState(lead?.value || "");
-    const [createdAt, setCreatedAt] = useState(
-        lead?.createdAt ? new Date(lead.createdAt).toISOString().slice(0, 16) : ""
-    );
+    // ✅ one form state for all fields
+    const [form, setForm] = useState({
+        title: lead?.title || "",
+        description: lead?.description || "",
+        status: lead?.status || "Pending",
+        value: lead?.value || "",
+        createdAt: lead?.createdAt
+            ? new Date(lead.createdAt).toISOString().slice(0, 16)
+            : "",
+    });
+
+    // ✅ update handler for all inputs
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const updatedLead = {
-            ...lead,
-            title,
-            description,
-            status,
-            value,
-            createdAt,
-        };
-
-        // Dispatch the update action to Redux
-        dispatch(updateLead(updatedLead));
+        dispatch(updateLead({ _id, leadData: { ...form } }));
 
         onClose();
     };
-
 
     return (
         <div className="fixed inset-0 flex items-center justify-center 
@@ -56,9 +55,10 @@ export default function EditLead({ lead, onClose }) {
                         <label className="text-sm font-medium block mb-1">Title</label>
                         <input
                             type="text"
+                            name="title"
                             placeholder="Lead Title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            value={form.title}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 text-sm"
                         />
                     </div>
@@ -67,9 +67,10 @@ export default function EditLead({ lead, onClose }) {
                     <div>
                         <label className="text-sm font-medium block mb-1">Description</label>
                         <textarea
+                            name="description"
                             placeholder="Lead Description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={form.description}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 text-sm resize-none h-24"
                         />
                     </div>
@@ -78,8 +79,9 @@ export default function EditLead({ lead, onClose }) {
                     <div>
                         <label className="text-sm font-medium block mb-1">Status</label>
                         <select
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
+                            name="status"
+                            value={form.status}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 text-sm"
                         >
                             <option>Contacted</option>
@@ -94,8 +96,9 @@ export default function EditLead({ lead, onClose }) {
                         <label className="text-sm font-medium block mb-1">Value ($)</label>
                         <input
                             type="number"
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
+                            name="value"
+                            value={form.value}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 text-sm"
                         />
                     </div>
@@ -105,8 +108,9 @@ export default function EditLead({ lead, onClose }) {
                         <label className="text-sm font-medium block mb-1">Created At</label>
                         <input
                             type="datetime-local"
-                            value={createdAt}
-                            onChange={(e) => setCreatedAt(e.target.value)}
+                            name="createdAt"
+                            value={form.createdAt}
+                            onChange={handleChange}
                             className="w-full border rounded-lg p-2 text-sm"
                         />
                     </div>

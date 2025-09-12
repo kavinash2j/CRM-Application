@@ -1,5 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchCustomers } from "../Redux/customerThunks";
+
 import {
     ResponsiveContainer,
     LineChart,
@@ -16,9 +19,13 @@ export default function Dashboard() {
     const customers = useSelector((state) => state.customers.customers) || [{ name: "No customers" }];
     const leads = useSelector((state) => state.leads.leads) || [{ title: "No leads" }];
 
+    // useEffect(() => {
+    //     dispatch(fetchCustomers());
+    // }, []);
+
     // Pick the next appointment (just take first In Progress lead)
     const nextAppointment = leads.find((d) => d.status === "In Progress") || {
-        id: "N/A",
+        _id: "N/A",
         address: "No upcoming leads",
     };
 
@@ -48,13 +55,13 @@ export default function Dashboard() {
                     <h2 className="font-semibold text-lg">Upcoming Lead</h2>
                     <p className="mt-4">{nextAppointment.address}</p>
                     <p className="text-sm">
-                        {customers.find((c) => c.id === nextAppointment.customerId)?.name}
+                        {customers.find((c) => c._id === nextAppointment.customerId)?.name}
                     </p>
                     <p className="mt-4 text-sm">{nextAppointment.createdAt}</p>
                     <div className="flex justify-between items-center mt-6">
                         <span className="font-bold text-xl">${nextAppointment.value}</span>
                         <button
-                            onClick={() => navigate(`/leads/${nextAppointment.id}`)}
+                            onClick={() => navigate(`/leads/${nextAppointment._id}`)}
                             className="bg-amber-50 text-black px-4 py-2 rounded-xl cursor-pointer hover:scale-105 transition-all"
                         >
                             See Detail
@@ -100,7 +107,7 @@ export default function Dashboard() {
                     <ul className="mt-4 space-y-3">
                         {leads.length > 0 ? (
                             leads.slice(0, 4).map((lead) => (
-                                <li key={lead.id} className="flex justify-between text-sm">
+                                <li key={lead._id} className="flex justify-between text-sm">
                                     <span>{lead.title}</span>
                                     <span>${lead.value}</span>
                                 </li>
@@ -147,7 +154,7 @@ export default function Dashboard() {
                     <ul className="mt-4 space-y-3">
                         {customers.length > 0 ? (
                             customers.slice(0, 9).map((c) => (
-                                <li key={c.id}>
+                                <li key={c._id}>
                                     <p className="font-medium">{c.name}</p>
                                     <p className="text-xs text-gray-500">{c.email}</p>
                                 </li>
