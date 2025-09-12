@@ -24,7 +24,7 @@ export default function Dashboard() {
     // }, []);
 
     // Pick the next appointment (just take first In Progress lead)
-    const nextAppointment = leads.find((d) => d.status === "In Progress") || {
+    const nextAppointment = leads.find((d) => d.status === "New") || {
         _id: "N/A",
         address: "No upcoming leads",
     };

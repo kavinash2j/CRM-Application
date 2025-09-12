@@ -1,5 +1,5 @@
 import Home from "./Pages/Home.jsx";
-import Login from "./Pages/login";
+import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Leads from "./Pages/Leads.jsx";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
