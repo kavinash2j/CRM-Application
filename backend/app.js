@@ -9,7 +9,7 @@ const leadRoute = require("./routes/lead.routes")
 
 app.use(cors(
     {
-        origin: "http://localhost:5173", // your React app
+        origin: process.env.CLIENT_URL, // your React app
         credentials: true,              // allow cookies / auth headers
     }
 ));
