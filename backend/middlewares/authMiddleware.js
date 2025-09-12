@@ -3,22 +3,22 @@ const userModel = require("../models/User.models.js");
 
 const authMiddleware = async (req, res, next) => {
     try {
-        console.log("middlear hit")
+        // console.log("middlear hit")
         let token = null;
 
         // 1. Check Authorization header
         const authHeader = req.headers["authorization"];
-        console.log("authHeader is ", req.headers["authorization"])
+        // console.log("authHeader is ", req.headers["authorization"])
         if (authHeader && authHeader.startsWith("Bearer ")) {
             token = authHeader.split(" ")[1];
         }
 
         // 2. If not in header, check cookies
         if (!token && req.cookies?.token) {
-            console.log("token from cookie", req.cookies.token)
+            // console.log("token from cookie", req.cookies.token)
             token = req.cookies.token;
         }
-        console.log("from middlewaer token = ", token);
+        // console.log("from middlewaer token = ", token);
         if (!token) {
             return res.status(401).json({ message: "No token, authorization denied" });
         }
@@ -36,7 +36,7 @@ const authMiddleware = async (req, res, next) => {
 
     } catch (err) {
 
-        console.error("Auth error:", err.message);
+        // console.error("Auth error:", err.message);
         res.status(401).json({ message: "Invalid or expired token" });
 
     }

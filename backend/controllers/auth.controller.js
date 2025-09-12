@@ -2,7 +2,7 @@ const userModel = require("../models/User.models");
 const { validationResult } = require("express-validator");
 
 module.exports.loginController = async (req, res) => {
-    console.log("login route hit")
+    // console.log("login route hit")
     try {
         const error = validationResult(req);
         if (!error.isEmpty()) {
@@ -18,7 +18,11 @@ module.exports.loginController = async (req, res) => {
 
         const token = await user.generateAuthToken();
 
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,       // ✅ required in production (HTTPS)
+            sameSite: "none"    // ✅ required for cross-site
+        });
 
         res.json({ token });
 

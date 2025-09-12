@@ -20,8 +20,8 @@ router.post("/login",
     authController.loginController);
 
 router.get("/profile", authMiddleware, (req, res) => {
-    console.log("profile route hit")
-    console.log("profile route cookis", req.cookies.token)
+    // console.log("profile route hit")
+    // console.log("profile route cookis", req.cookies.token)
     res.json(req.user);
 })
 
