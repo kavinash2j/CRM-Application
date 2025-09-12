@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchLeads, createLead, updateLead, deleteLead } from "./leadThunks";
 import { fetchCustomers, createCustomer, updateCustomer, deleteCustomer } from "./customerThunks";
+import { logoutUser } from "./userThunks";
 
 export const customerSlice = createSlice({
     name: "customers",
@@ -126,20 +127,33 @@ export const userSlice = createSlice({
         login: (state, action) => {
             state.currentUser = action.payload;
         },
-        logout: (state) => {
-            state.currentUser = null;
-        },
         updateUser: (state, action) => {
             if (state.currentUser) {
                 state.currentUser = { ...state.currentUser, ...action.payload };
             }
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(logoutUser.pending, (state) => {
+                state.isLoading = true;
+                state.isError = false;
+            })
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.isLoading = false;
+                state.currentUser = null;
+            })
+            .addCase(logoutUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                console.error("Logout failed:", action.payload);
+            });
+    },
 });
 
 export const { addCustomer } = customerSlice.actions;
 export const { addLead } = leadsSlice.actions;
-export const { login, logout, updateUser } = userSlice.actions;
+export const { login, updateUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const customerReducer = customerSlice.reducer;

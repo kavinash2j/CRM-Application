@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Home, Users, Briefcase } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { Home, Users, Briefcase, LogOut } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../Redux/userThunks";
 
 export default function Sidebar() {
     const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
 
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -15,6 +17,15 @@ export default function Sidebar() {
         { name: "Leads", icon: Briefcase, path: "/leads" },
         { name: "Customers", icon: Users, path: "/customers" },
     ];
+
+    const handleLogout = () => {
+        const confirmLogout = window.confirm("Are you sure you want to logout?");
+        if (confirmLogout) {
+            // Clear state / token here
+            dispatch(logoutUser());
+            navigate("/login");
+        }
+    };
 
     return (
         <div className="h-screen">
@@ -70,18 +81,37 @@ export default function Sidebar() {
                 </nav>
 
                 {/* Footer */}
-                <div className="mt-auto pt-6 border-t border-indigo-500/40 flex flex-col items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-indigo-600 font-bold shadow cursor-pointer hover:scale-105 transition">
-                        {currentUser.name.charAt(0).toUpperCase()}
+                <div className="mt-auto pt-6 border-t border-indigo-500/40 flex flex-col gap-3">
+                    {/* User */}
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-indigo-600 font-bold shadow cursor-pointer hover:scale-105 transition">
+                            {currentUser.name.charAt(0).toUpperCase()}
+                        </div>
+                        <span
+                            className={`text-white text-sm font-medium transition-all duration-300 ${expanded
+                                ? "opacity-100 translate-x-0 mt-1"
+                                : "opacity-0 -translate-x-2"
+                                }`}
+                        >
+                            {currentUser.name}
+                        </span>
                     </div>
-                    <span
-                        className={`text-white text-sm font-medium transition-all duration-300 ${expanded
-                            ? "opacity-100 translate-x-0 mt-1"
-                            : "opacity-0 -translate-x-2"
-                            }`}
+
+                    {/* Logout */}
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-3 py-2 rounded-xl text-white hover:bg-red-500/40 transition-all duration-300"
                     >
-                        {currentUser.name}
-                    </span>
+                        <LogOut className="w-6 h-6 flex-shrink-0" />
+                        <span
+                            className={`whitespace-nowrap font-medium transition-all duration-300 ${expanded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-2"
+                                }`}
+                        >
+                            Logout
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>

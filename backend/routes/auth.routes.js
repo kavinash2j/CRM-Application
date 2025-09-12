@@ -21,7 +21,21 @@ router.post("/login",
 
 router.get("/profile", authMiddleware, (req, res) => {
     console.log("profile route hit")
+    console.log("profile route cookis", req.cookies)
     res.json(req.user);
 })
+
+router.post("/logout", (req, res) => {
+
+    // console.log("requsted the logout")
+
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+    });
+
+    res.json({ message: "Logged out successfully" });
+});
 
 module.exports = router;

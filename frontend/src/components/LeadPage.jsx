@@ -111,8 +111,18 @@ export default function LeadPage({ showModal, setShowModal }) {
                     <p className="text-lg font-semibold text-green-600">${lead.value}</p>
                 </div>
                 <div className="p-5 border rounded-xl bg-gray-50 shadow-sm">
-                    <p className="text-sm text-gray-500 mb-1">Created At</p>
-                    <p className="text-lg font-semibold text-gray-800">{lead.createdAt}</p>
+                    <p className="text-sm text-gray-500 mb-1">Updated At</p>
+                    <p className="text-lg font-semibold text-gray-800">
+                        {new Date(lead.createdAt).toLocaleString("en-GB", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                        })}
+                    </p>
+
                 </div>
             </div>
 

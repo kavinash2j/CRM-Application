@@ -84,10 +84,10 @@ export default function EditLead({ lead, onClose }) {
                             onChange={handleChange}
                             className="w-full border rounded-lg p-2 text-sm"
                         >
-                            <option>Contacted</option>
-                            <option>In Progress</option>
-                            <option>Closed</option>
-                            <option>Pending</option>
+                            <option value="New">New</option>
+                            <option value="Contacted">Contacted</option>
+                            <option value="Converted">Converted</option>
+                            <option value="Lost">Lost</option>
                         </select>
                     </div>
 
@@ -103,9 +103,9 @@ export default function EditLead({ lead, onClose }) {
                         />
                     </div>
 
-                    {/* Created At */}
+                    {/* Updated At */}
                     <div>
-                        <label className="text-sm font-medium block mb-1">Created At</label>
+                        <label className="text-sm font-medium block mb-1">updated At</label>
                         <input
                             type="datetime-local"
                             name="createdAt"

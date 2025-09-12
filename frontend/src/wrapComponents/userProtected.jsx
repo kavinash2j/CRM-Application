@@ -16,26 +16,28 @@ export default function UserProtected({ children }) {
             try {
 
                 let token = localStorage.getItem("token");
-                // console.log(token);
+                console.log("token ", token);
+                if (token) {
+                    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-                const headers = token ? { Authorization: `Bearer ${token}` } : {};
+                    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
+                        headers,
+                        withCredentials: true,
+                    });
+                    dispatch(login(res.data));
+                    console.log("response from profile", res);
 
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
-                    headers,
-                    withCredentials: true,
-                });
-                dispatch(login(res.data));
-                console.log("response from profile", res);
+                    if (res.status === 200) {
+                        setIsAuthenticated(true);
 
-                if (res.status === 200) {
-                    setIsAuthenticated(true);
+                        dispatch(fetchCustomers());
+                        dispatch(fetchLeads());
 
-                    dispatch(fetchCustomers());
-                    dispatch(fetchLeads());
-
-                } else {
-                    setIsAuthenticated(false);
+                    } else {
+                        setIsAuthenticated(false);
+                    }
                 }
+
             } catch (err) {
                 setIsAuthenticated(false);
             } finally {

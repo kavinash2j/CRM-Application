@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { DataContext } from "../Context/DataContext";
 import SearchModal from "../components/SearchModel.jsx";
 
-export default function CustomerDetails({ showModal, setShowModal }) {
+export default function CustomerDetails() {
     const { showSearch, setShowSearch, showModal, setShowModal } = useContext(DataContext);
     return (
         <div className="flex h-screen bg-gray-100">
