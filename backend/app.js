@@ -10,7 +10,9 @@ const leadRoute = require("./routes/lead.routes")
 app.use(cors(
     {
         origin: process.env.CLIENT_URL, // your React app
-        credentials: true,              // allow cookies / auth headers
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"] // <- important!          // allow cookies / auth headers
     }
 ));
 app.use(express.json());

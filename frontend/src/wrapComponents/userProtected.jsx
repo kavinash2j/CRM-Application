@@ -18,8 +18,8 @@ export default function UserProtected({ children }) {
                 let token = localStorage.getItem("token");
                 console.log("token ", token);
                 if (token) {
-                    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
+                    const headers = { Authorization: `Bearer ${token}` };
+                    console.log(headers);
                     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
                         headers,
                         withCredentials: true,
