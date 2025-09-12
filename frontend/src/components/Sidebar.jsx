@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Home, Users, Briefcase } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 export default function Sidebar() {
     const location = useLocation();
     const [expanded, setExpanded] = useState(false);
+
+    const currentUser = useSelector((state) => state.user.currentUser);
 
     const menuItems = [
         { name: "Dashboard", icon: Home, path: "/dashboard" },
@@ -68,7 +72,7 @@ export default function Sidebar() {
                 {/* Footer */}
                 <div className="mt-auto pt-6 border-t border-indigo-500/40 flex flex-col items-center gap-2">
                     <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-indigo-600 font-bold shadow cursor-pointer hover:scale-105 transition">
-                        A
+                        {currentUser.name.charAt(0).toUpperCase()}
                     </div>
                     <span
                         className={`text-white text-sm font-medium transition-all duration-300 ${expanded
@@ -76,7 +80,7 @@ export default function Sidebar() {
                             : "opacity-0 -translate-x-2"
                             }`}
                     >
-                        Avinash
+                        {currentUser.name}
                     </span>
                 </div>
             </div>

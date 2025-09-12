@@ -112,9 +112,35 @@ export const leadsSlice = createSlice({
     }
 })
 
+
+export const userSlice = createSlice({
+    name: "user",
+    initialState: {
+        currentUser: {
+            email: "",
+            name: "",
+            role: "user"
+        },
+    },
+    reducers: {
+        login: (state, action) => {
+            state.currentUser = action.payload;
+        },
+        logout: (state) => {
+            state.currentUser = null;
+        },
+        updateUser: (state, action) => {
+            if (state.currentUser) {
+                state.currentUser = { ...state.currentUser, ...action.payload };
+            }
+        },
+    },
+});
+
 export const { addCustomer } = customerSlice.actions;
 export const { addLead } = leadsSlice.actions;
+export const { login, logout, updateUser } = userSlice.actions;
 
-
+export const userReducer = userSlice.reducer;
 export const customerReducer = customerSlice.reducer;
 export const leadsReducer = leadsSlice.reducer;

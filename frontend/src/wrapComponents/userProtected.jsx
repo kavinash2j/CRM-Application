@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { fetchCustomers } from "../Redux/customerThunks";
 import { fetchLeads } from "../Redux/leadThunks";
+import { login } from "../Redux/DataRedux";
 
 export default function UserProtected({ children }) {
     const [loading, setLoading] = useState(true);
@@ -23,7 +24,9 @@ export default function UserProtected({ children }) {
                     headers,
                     withCredentials: true,
                 });
-                console.log(res);
+                dispatch(login(res.data));
+                console.log("response from profile", res);
+
                 if (res.status === 200) {
                     setIsAuthenticated(true);
 

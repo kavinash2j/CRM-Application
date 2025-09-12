@@ -11,7 +11,6 @@ import UserProtected from './wrapComponents/userProtected.jsx'
 
 export default function App() {
 
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <Routes>
@@ -22,39 +21,39 @@ export default function App() {
       <Route path="/dashboard" element={
 
         <UserProtected>
-          <Home showModal={showModal} setShowModal={setShowModal} />
+          <Home />
         </UserProtected>
 
       } />
       <Route path="/leads" element={
 
         <UserProtected>
-          <Leads showModal={showModal} setShowModal={setShowModal} />
+          <Leads />
         </UserProtected>
 
       } />
       <Route path="/leads/:_id" element={
 
         <UserProtected>
-          <LeadsDetails showModal={showModal} setShowModal={setShowModal} />
+          <LeadsDetails />
         </UserProtected>
 
       } />
       <Route path="/customers" element={
 
         <UserProtected>
-          <Customers showModal={showModal} setShowModal={setShowModal} />
+          <Customers />
         </UserProtected>
 
       } />
       <Route path="/customer/:_id" element={
 
         <UserProtected>
-          <CustomerDetails showModal={showModal} setShowModal={setShowModal} />
+          <CustomerDetails />
         </UserProtected>
 
       } />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

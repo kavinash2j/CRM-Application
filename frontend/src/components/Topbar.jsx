@@ -1,18 +1,18 @@
+// components/Topbar.jsx
 import React from "react";
 import { Plus, Search } from "lucide-react";
 
-export default function Topbar({ title, onAddNew }) {
+export default function Topbar({ title, onAddNew, onSearchClick }) {
     return (
-        <div className="flex justify-between items-center bg-white/90 backdrop-blur-md px-8 py-4 shadow-sm border-b border-gray-100 sticky top-0 z-50 ">
-            {/* Title */}
+        <div className="flex justify-between items-center bg-white/90 backdrop-blur-md px-8 py-4 shadow-sm border-b border-gray-100 sticky top-0 z-50">
             <h1 className="text-2xl font-extrabold text-gray-800 tracking-tight">
                 {title}
             </h1>
 
-            {/* Actions: Search + Add New */}
             <div className="flex items-center gap-4">
-                {/* Search Icon Button */}
+                {/* Search Button */}
                 <button
+                    onClick={onSearchClick}
                     className="p-2.5 rounded-xl border border-gray-200 bg-white
                      hover:border-indigo-300 hover:text-indigo-600 
                      hover:shadow-md transition-all duration-200
