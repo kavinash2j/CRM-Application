@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateCustomer } from "../Redux/customerThunks"; // make sure path is correct
+import { updateCustomer, fetchCustomers } from "../Redux/customerThunks"; // make sure path is correct
 import { useParams } from "react-router-dom";
+import { fetchLeads } from "../Redux/leadThunks";
 
 export default function EditCustomer({ customer, onClose }) {
     const dispatch = useDispatch();
@@ -21,6 +22,8 @@ export default function EditCustomer({ customer, onClose }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(updateCustomer({ _id, customerData: { ...form } }));
+        dispatch(fetchCustomers);
+        dispatch(fetchLeads);
         onClose();
     };
 

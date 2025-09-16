@@ -28,6 +28,8 @@ export default function LeadPage({ showModal, setShowModal }) {
     }, []);
 
     const lead = leads.find((lead) => lead._id === _id);
+    let customer = null;
+    customer = customers.find((c) => c._id === lead?.customerId);
 
 
     const handleDelete = () => {
@@ -78,7 +80,7 @@ export default function LeadPage({ showModal, setShowModal }) {
             {/* Customer Profile */}
             {lead.customerId && (
                 <div
-                    onClick={() => navigate(`/customer/${lead.customerId._id}`)}
+                    onClick={() => navigate(`/customer/${lead.customerId._id || customer._id}`)}
                     className="flex items-center gap-4 p-5 border rounded-xl cursor-pointer hover:bg-gray-50 transition"
                 >
                     <img
@@ -88,10 +90,10 @@ export default function LeadPage({ showModal, setShowModal }) {
                     />
                     <div>
                         <p className="font-semibold text-gray-900 text-lg">
-                            {lead?.customerId.name || "Unknown Customer"}
+                            {lead?.customerId.name || customer.name || "Unknown Customer"}
                         </p>
                         <p className="text-sm text-gray-500">
-                            {lead?.customerId.email || "No email"} • {lead?.customerId.phone || "No phone"}
+                            {lead?.customerId.email || customer.email || "No email"} • {lead?.customerId.phone || customer.phone || "No phone"}
                         </p>
                         <p className="text-xs text-indigo-600 font-medium">View Full Profile →</p>
                     </div>
