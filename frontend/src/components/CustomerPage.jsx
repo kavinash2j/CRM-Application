@@ -18,7 +18,7 @@ export const CustomerPage = () => {
 
     const customer = customers.find((c) => c._id == _id);
 
-    const customerLeads = leads.filter((d) => d.customerId === customer._id);
+    const customerLeads = leads.filter((d) => d.customerId._id === customer._id);
 
     if (!customer) return <div className="p-6">Customer not found</div>;
 
